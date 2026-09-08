@@ -79,9 +79,10 @@
 
   const STOP = new Set(["tv", "the", "a", "and", "for", "with", "inch", "in", "of", "flat", "screen"]);
   function terms(q) { return q.toLowerCase().split(/\s+/).filter((t) => t && !STOP.has(t)); }
+  const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   function matchDeal(d, ts) {
     const hay = `${d.title} ${d.snippet} ${d.store || ""}`.toLowerCase();
-    return ts.every((t) => hay.includes(t));
+    return ts.every((t) => new RegExp(`(^|[^a-z0-9])${esc(t)}(s|es)?(?![a-z0-9])`, "i").test(hay));
   }
   function ago(iso) {
     const h = Math.round((Date.now() - Date.parse(iso)) / 36e5);
