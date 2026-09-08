@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-08T00:38:15.717Z",
+ "updated": "2026-09-08T00:46:03.536Z",
  "keywords": [
   "sony tv",
   "sony bravia",
@@ -19,33 +19,48 @@
   "roku",
   "soundbar"
  ],
- "count": 356,
- "errors": [],
+ "count": 336,
+ "errors": [
+  "Ben's Bargains: 403 https://bensbargains.com/rss/"
+ ],
  "deals": [
   {
-   "source": "Ben's Bargains",
-   "title": "10 Panties for $40 at Victoria's Secret",
-   "url": "https://bensbargains.com/bargain/10-panties-for-1078521/#rss",
+   "source": "Slickdeals Frontpage",
+   "title": "Pair of 25-Lbs Fitvids Rubber Encased Hex Dumbbell $40 + Free S&H w/ Prime",
+   "url": "https://slickdeals.net/f/19974174-39-99-25-lb-fitvids-rubber-encased-hex-dumbbell-pair-at-woot?utm_source=rss&utm_content=fp&utm_medium=RSS2",
    "price": "$40",
+   "code": null,
+   "percentOff": null,
+   "store": "Woot",
+   "score": 15,
+   "date": "2026-09-08T00:39:39.000Z",
+   "snippet": "Woot! [ woot.com ] has 25-lb Fitvids Rubber Encased Hex Dumbbell (Pair) for $39.99 . Shipping is free for Amazon Prime Members (must login with your Amazon account and select a shipping address in order for Woot to apply",
+   "keyword": null
+  },
+  {
+   "source": "Slickdeals Frontpage",
+   "title": "50-Oz Konokyo Insulated Double Wall Stainless Steel Water Bottle Flask w/ 3 Lids $14.75",
+   "url": "https://slickdeals.net/f/19980693-14-75-50-oz-konokyo-insulated-double-wall-stainless-steel-water-bottle-flask-w-3-lids-at-amazon?utm_source=rss&utm_content=fp&utm_medium=RSS2",
+   "price": "$14.75",
+   "code": null,
+   "percentOff": null,
+   "store": "Amazon",
+   "score": 13,
+   "date": "2026-09-08T00:38:45.000Z",
+   "snippet": "Amazon has 50-Oz Konokyo Insulated Double Wall Stainless Steel Water Bottle Flask w/ 3 Lids (Black) on sale for $14.75 . Shipping is free w/ Prime or on $35+ orders. Thanks to Deal Hunter phoinix for sharing this deal. A",
+   "keyword": null
+  },
+  {
+   "source": "RedFlagDeals",
+   "title": "[Aqua-tech.ca] Pentair Intellichlor IC40 Replacement Salt Cell",
+   "url": "https://forums.redflagdeals.com/viewtopic.php?t=2825381&p=41248975#p41248975",
+   "price": "$1800",
    "code": null,
    "percentOff": null,
    "store": null,
    "score": null,
-   "date": "2026-09-08T00:30:00.000Z",
-   "snippet": "\"Panty Party\"! Victoria's Secret has 10 pairs of select panties for $40 with free shipping on $50+ with Rewards membership. Add any 10 eligible pairs to cart to see discount.",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "HSLGOVE 3-IN-1 Mini Bag Sealer $8.24 at Amazon",
-   "url": "https://bensbargains.com/bargain/hslgove-3-in-1-mini-bag-sealer-1078527/#rss",
-   "price": "$8.24",
-   "code": "CODE",
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-08T00:23:00.000Z",
-   "snippet": "Limited time deal . Amazon with Tianyuan us has the HSLGOVE 3-IN-1 Mini Bag Sealer for $14.99 - $6.75 off with coupon code Q4I7Q4GZ at checkout = $8.24 with free shipping on $35+ or with Prime.",
+   "date": "2026-09-08T00:24:58.000Z",
+   "snippet": "Definitely niche product, but aqua-tech.ca (actual store based in Winnepeg, MB) has this a lot cheaper than many local Ontario pool shops ($1800+), with free shipping. If your salt cell is coming up to life, this is a go",
    "keyword": null
   },
   {
@@ -59,58 +74,6 @@
    "score": null,
    "date": "2026-09-08T00:21:24.000Z",
    "snippet": "Home Depot has the Moen Findlay Single Hole / Single Lever bathroom faucet on for $129.99. Also available in Chrome and Brushed Nickel. https://www.homedepot.ca/product/moen-f ... 1001841118 Statistics: Posted by toguy —",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "TALIX 125W 12800mAh Power Bank $22 at Amazon",
-   "url": "https://bensbargains.com/bargain/talix-125w-12800mah-power-bank-1078520/#rss",
-   "price": "$22",
-   "code": "CODE",
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-08T00:20:00.000Z",
-   "snippet": "Amazon with Lenovo has the TALIX 125W 12800mAh Power Bank with 240W USB-C Cable and 3-Port for Laptop/Lenovo/Dell/MacBook/iPhone 17/Moto/Samsung S26 (PBFO12125A) for $40 - $18 off with coupon code MDMBIB3Z &nbsp;at final",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "10-Piece NEWFIX Torx Screwdriver Set with Case $4.99 at Amazon",
-   "url": "https://bensbargains.com/bargain/10-piece-newfix-torx-screwdriver-set-with-case-1078525/#rss",
-   "price": "$4.99",
-   "code": "CODE",
-   "percentOff": 50,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-08T00:13:00.000Z",
-   "snippet": "Amazon with Newfix Tools has the 10-Piece NEWFIX Torx Screwdriver Set with Case for $9.99 - 50% off with coupon code CM7OZ2JC at checkout = $4.99 with free shipping on $35+ or with Prime.",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "Syedee Weight Plated Loaded Leveraged Belt Squat Machine $510 at Walmart",
-   "url": "https://bensbargains.com/bargain/syedee-weight-plated-loaded-leveraged-belt-squat-machine-1078519/#rss",
-   "price": "$510",
-   "code": null,
-   "percentOff": null,
-   "store": "Walmart",
-   "score": null,
-   "date": "2026-09-08T00:10:00.000Z",
-   "snippet": "Walmart with Syedee Fitness has the syedee Belt Squat Leg Machine with Weightlifting Belt, 4 Adjustable Positions, 800lb Weight Capacity (Black) for&nbsp; $510 with free shipping.",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "Rain-Mate Windproof Compact Folding Lightweight Travel Umbrella $9.46 at Amazon",
-   "url": "https://bensbargains.com/bargain/rain-mate-windproof-compact-folding-lightweight-travel-umbrella-1078518/#rss",
-   "price": "$9.46",
-   "code": null,
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-08T00:10:00.000Z",
-   "snippet": "Amazon with Upper Echelon Products has the Rain-Mate Windproof Compact Folding Lightweight Travel Umbrella (Black) for&nbsp; $9.46 with free shipping on $35+ or with Prime.",
    "keyword": null
   },
   {
@@ -134,7 +97,7 @@
    "code": null,
    "percentOff": null,
    "store": "Amazon",
-   "score": 17,
+   "score": 16,
    "date": "2026-09-08T00:02:12.000Z",
    "snippet": "Amazon [ amazon.com ] has Metaphor: ReFantazio Launch Edition for $24.99 . Shipping is free with Prime or on $35+ orders. Available: [LIST][*]Amazon PlayStation 5 [ amazon.com ] [*]GameStop[LIST][*] PlayStation 5 [ games",
    "keyword": null
@@ -166,19 +129,6 @@
    "keyword": null
   },
   {
-   "source": "Ben's Bargains",
-   "title": "DZAVOK 336 LED 4-in-1 Red Light Therapy Mask $50 at Amazon",
-   "url": "https://bensbargains.com/bargain/dzavok-336-led-4-in-1-red-light-therapy-mask-1078517/#rss",
-   "price": "$50",
-   "code": "CODE",
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-08T00:00:00.000Z",
-   "snippet": "Amazon with DZAVOK has the DZAVOK 336 LED 4-in-1 Red Light Therapy Mask for $130 - $80 off with coupon code 6AW1JTZA &nbsp;at checkout = $50 &nbsp;with free shipping. Amazon promo codes don&rsquo;t always work on the fir",
-   "keyword": null
-  },
-  {
    "source": "Slickdeals Frontpage",
    "title": "5-Pk QWE Boys' Dry-Fit Sleeveless Athletic Undershirts Tank Tops (Various, 5-18) $9.50",
    "url": "https://slickdeals.net/f/19983663-5-pk-qwe-boys-dry-fit-sleeveless-athletic-undershirts-tank-tops-various-5-18-9-50?utm_source=rss&utm_content=fp&utm_medium=RSS2",
@@ -186,7 +136,7 @@
    "code": "CODE",
    "percentOff": 50,
    "store": "Amazon",
-   "score": 15,
+   "score": 14,
    "date": "2026-09-07T23:59:29.000Z",
    "snippet": "SAISI DIRECT via Amazon [ amazon.com ] has 5-Pack QWE Boys Dry-Fit Sleeveless Athletic Undershirts Tank Tops (Various, Age: 5Y-6Y to 16Y-18Y) on sale for $18.99 - 50% off when you enter the coupon code 77VWNB6H = $9.49 .",
    "keyword": null
@@ -199,22 +149,9 @@
    "code": null,
    "percentOff": null,
    "store": "Amazon",
-   "score": 15,
+   "score": 14,
    "date": "2026-09-07T23:50:43.000Z",
    "snippet": "Amazon [ amazon.com ] has Thunderbirds: The Complete Series (DVD) for $22.99 . Shipping is free with Prime or on $35+ orders. * Previous Popular Deal at $26 with 11 Deal Score and 3 comments amazon.com/dp/B00UCFVHC8 [ am",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "Nesugar Portable Compact Clothes Dryer $40 at Amazon",
-   "url": "https://bensbargains.com/bargain/nesugar-portable-compact-clothes-dryer-1078516/#rss",
-   "price": "$40",
-   "code": "CODE",
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:50:00.000Z",
-   "snippet": "Amazon with nesugarlife has the Nesugar Portable Compact Clothes Dryer with 4 Drying Modules for $99 - $59 off with coupon code RMZNI4LE at checkout = $40 with free shipping. Amazon promo codes don’t always work on the f",
    "keyword": null
   },
   {
@@ -225,7 +162,7 @@
    "code": "I3HJQ97T",
    "percentOff": 50,
    "store": "Amazon",
-   "score": 16,
+   "score": 15,
    "date": "2026-09-07T23:42:36.000Z",
    "snippet": "YKJIYUE via Amazon [ amazon.com ] has NICEPEOPLE Adjustable Weight Bench w/ 8 Backrest Angles (Up to 660-Lbs Capacity, Red) on sale for $71.99 - 50% off when you apply promo code I3HJQ97T at checkout = $35.99 . Shipping ",
    "keyword": null
@@ -238,48 +175,9 @@
    "code": null,
    "percentOff": null,
    "store": "Amazon",
-   "score": 18,
+   "score": 17,
    "date": "2026-09-07T23:41:38.000Z",
    "snippet": "Amazon [ amazon.com ] has INTEX Explorer 300 Inflatable Boat w/ Aluminum Oars & Hand Pump for $19.99 . Shipping is free with Prime or on $35+ orders. * Previous Frontpage Deal at $20 with 77 Deal Score and 14 comments am",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "5-Piece FitBeast Hand Grip Strengthener Kit $9.99 at Amazon",
-   "url": "https://bensbargains.com/bargain/5-piece-fitbeast-hand-grip-strengthener-kit-1078514/#rss",
-   "price": "$9.99",
-   "code": null,
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:40:00.000Z",
-   "snippet": "Limited time deal. Amazon with FitBeast US has the 5-Piece FitBeast Hand Grip Strengthener Kit for $9.99 with free shipping on $35+ or with Prime. Contains 2 adjustable hand gripper, wrist workout, finger stretcher resis",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "VEHLIVE 6000RPM Dual Hole Spark Plug Tester $10 at Amazon",
-   "url": "https://bensbargains.com/bargain/vehlive-6000rpm-dual-hole-spark-plug-tester-1078515/#rss",
-   "price": "$10",
-   "code": "CODE",
-   "percentOff": 50,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:35:00.000Z",
-   "snippet": "Amazon with VEHLIVE has the VEHLIVE 6000RPM Dual Hole Spark Plug Tester for $21 - 50% off with coupon code TZRQU343 ( click to activate ) =&nbsp; $10 &nbsp;with free shipping on $35+ or with Prime.",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "NDL Sofa Armrest Clip Table No-Slip Couch Tray $8.99 at Amazon",
-   "url": "https://bensbargains.com/bargain/ndl-sofa-armrest-clip-table-no-slip-couch-tray-1078512/#rss",
-   "price": "$8.99",
-   "code": null,
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:30:00.000Z",
-   "snippet": "Amazon with Pekokavo has the NDL Sofa Armrest Clip Table No-Slip Couch Tray for&nbsp; $8.99 with free shipping on $35+ or with Prime. Measures 9.8\"D x 9.8\"W x 4.5\"H.",
    "keyword": null
   },
   {
@@ -290,35 +188,9 @@
    "code": null,
    "percentOff": null,
    "store": "Amazon",
-   "score": 16,
+   "score": 15,
    "date": "2026-09-07T23:28:11.000Z",
    "snippet": "GORILLA COMMERCE via Amazon [ amazon.com ] has 17.5\" x 11\" GORILLA GRIP Extra Thick 1.3\" Soft Foam Kneeling Pad for $12.99 . Shipping is free with Prime or on $35+ orders. Available from: [LIST][*] GORILLA COMMERCE via A",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "dobiju Custom Light-Up Acrylic Desk Name Plate $9.99 at Amazon",
-   "url": "https://bensbargains.com/bargain/dobiju-custom-light-up-acrylic-desk-name-plate-1078513/#rss",
-   "price": "$9.99",
-   "code": "CODE",
-   "percentOff": 50,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:27:00.000Z",
-   "snippet": "Amazon with GGDOMI ART CUSTOM has the dobiju Custom Light-Up Acrylic Desk Name Plate for $19.99 - 50% off with coupon code MUXE3GSB at checkout = $9.99 &nbsp;with free shipping on $35+ or with Prime.",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "Mitclear Weed Puller Tool with 58\" Long Handle $9.89 at Amazon",
-   "url": "https://bensbargains.com/bargain/mitclear-weed-puller-tool-with-58-long-handle-1078510/#rss",
-   "price": "$9.89",
-   "code": null,
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:20:00.000Z",
-   "snippet": "Amazon with IKU has the Mitclear Weed Puller Tool with 58\" Long Handle for $9.89 with free shipping on $35+ or with Prime.",
    "keyword": null
   },
   {
@@ -328,23 +200,10 @@
    "price": "$12",
    "code": null,
    "percentOff": null,
-   "store": "amazon",
-   "score": 33,
-   "date": "2026-09-07T23:16:47.000Z",
-   "snippet": "https://www.amazon.com/Akira-Movi...P8N1&psc =1 Available from: [LIST][*] Amazon [ amazon.com ] [*] Walmart [ walmart.com ]",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "VEVOR 2-6\" Vertical Lumber Cutting Chainsaw Mill $16 at Amazon",
-   "url": "https://bensbargains.com/bargain/vevor-2-6-vertical-lumber-cutting-chainsaw-mill-1078509/#rss",
-   "price": "$16",
-   "code": null,
-   "percentOff": null,
    "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:10:00.000Z",
-   "snippet": "Ends today. Amazon has the VEVOR 2-6\" Vertical Lumber Cutting Chainsaw Mill for $16 with free shipping on $35+ or with Prime.",
+   "score": 34,
+   "date": "2026-09-07T23:16:47.000Z",
+   "snippet": "Amazon has Akira (4K Ultra HD Blu-ray + Blu-ray) on sale for $11.99 . Shipping is free with Prime or on $35+ orders. Walmart also has Akira (4K Ultra HD Blu-ray + Blu-ray) on sale for $11.99 . Shipping is free w/ Walmart",
    "keyword": null
   },
   {
@@ -355,7 +214,7 @@
    "code": null,
    "percentOff": null,
    "store": "Amazon",
-   "score": 22,
+   "score": 21,
    "date": "2026-09-07T23:09:04.000Z",
    "snippet": "AnkerDirect via Amazon [ amazon.com ] has Anker 15-in-1 Surge Protector Power Strip w/ 5' Cord (12x AC, 1x USB-C, 2x USB-A) for $23.99 . Shipping is free with Prime or on $35+ orders. Black [ amazon.com ] White [ amazon.",
    "keyword": null
@@ -368,7 +227,7 @@
    "code": null,
    "percentOff": null,
    "store": "Costco",
-   "score": 22,
+   "score": 21,
    "date": "2026-09-07T23:06:19.000Z",
    "snippet": "Costco [ costco.com ] has for its Members: Timber Ridge Butterfly Padded Folding Loveseat for $29.99. Shipping is free. Features:[LIST][*]Double-occupancy Comfort: Overstuffed Design Seats Two Adults Comfortably[*]Heavy-",
    "keyword": null
@@ -383,33 +242,7 @@
    "store": "Amazon",
    "score": 21,
    "date": "2026-09-07T23:04:52.000Z",
-   "snippet": "Amazon [ amazon.com ] has adidas MLS 2026 Club Soccer Ball for $10.07 . Shipping is free with Prime or on $35+ orders. * Deal history: [LIST][*] Frontpage Deal at $10 with 71 Deal Score and 8 comments [*] Frontpage Deal ",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "Zeagoo Cotton Loose Fit Chunky Knit Sweater $12 at Amazon",
-   "url": "https://bensbargains.com/bargain/zeagoo-cotton-loose-fit-chunky-knit-sweater-1078511/#rss",
-   "price": "$12",
-   "code": "CODE",
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:03:00.000Z",
-   "snippet": "Limited time deal . Amazon with ZEAGOO has the Zeagoo Cotton Loose Fit Chunky Knit Sweater (Colorblock 284) for $23 - $11 off with coupon code 13DI3WYV at checkout = $12 with free shipping.",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "SEISSO Wall Repair Paste & Drywall Patch Kit $16 at Amazon",
-   "url": "https://bensbargains.com/bargain/seisso-wall-repair-paste-drywall-patch-kit-1078507/#rss",
-   "price": "$16",
-   "code": "CODE",
-   "percentOff": 50,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T23:00:00.000Z",
-   "snippet": "Amazon with happyanasus has the SEISSO Wall Repair Paste & Drywall Patch Kit (2x250g) for $32 - 50% off with coupon code&nbsp; QMXF0820 at checkout = $16 with free shipping on $35+ or with Prime. Amazon promo codes don&r",
+   "snippet": "Amazon has adidas MLS 2026 Club Soccer Ball (Size 5, Blue/Green/Orange/Yellow/2026 Club) for $10.07 . Shipping is free with Prime or on orders $35+. Alternatively, Target has adidas MLS Soccer Ball (Various Colors & Size",
    "keyword": null
   },
   {
@@ -432,23 +265,10 @@
    "price": "$250",
    "code": null,
    "percentOff": null,
-   "store": "Amazon",
+   "store": "amazon",
    "score": 24,
    "date": "2026-09-07T22:53:54.000Z",
-   "snippet": "Amazon has 27\" Acer Predator 4K 3840x2160 IPS 160Hz DFR 320Hz Gaming Monitor (XB273K) on sale for $249.99 . Shipping is free . Thanks to community member shivster1796 for finding this deal. Specs: [LIST][*]Display Size: ",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "Husqvarna 460 Rancher 24\" Gas Powered Chainsaw $410 at Amazon",
-   "url": "https://bensbargains.com/bargain/husqvarna-460-rancher-24-gas-powered-chainsaw-1078506/#rss",
-   "price": "$410",
-   "code": null,
-   "percentOff": null,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T22:50:00.000Z",
-   "snippet": "Amazon has the Husqvarna 460 Rancher 24\" Gas Powered Chainsaw for $410 with free shipping. Gas powered chainsaw is great for pruning, limb, or cutting firewood.",
+   "snippet": "Acer Predator 27\" 4K 3840x2160 IPS 160Hz DFR 320Hz Gaming Monitor XB273K V5 0.5ms, AMD FreeSync Premium, 2xHDMI 2.1, DisplayPort, VESA HDR400, Ergo Stand, Speaker, Bluelight Filter https://www.amazon.com/dp/B0DTMDVQ9J",
    "keyword": null
   },
   {
@@ -459,7 +279,7 @@
    "code": null,
    "percentOff": null,
    "store": null,
-   "score": 24,
+   "score": 25,
    "date": "2026-09-07T22:47:52.000Z",
    "snippet": "The hammock measures 275 x 155 cm (about 108 x 61 inches) and uses a thickened 320G canvas fabric. It has a listed 550 lb maximum load capacity, with reinforced nylon ropes and multiple strands of braided traction rope. ",
    "keyword": null
@@ -491,19 +311,6 @@
    "keyword": null
   },
   {
-   "source": "Ben's Bargains",
-   "title": "CVLIFE 6-9\" Adjustable Picatinny Bipod w/ Spring Return & Adapter $11 at Amazon",
-   "url": "https://bensbargains.com/bargain/cvlife-6-9-adjustable-picatinny-bipod-w-spring-return-adapter-1078505/#rss",
-   "price": "$11",
-   "code": "CODE",
-   "percentOff": 50,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T22:40:00.000Z",
-   "snippet": "Amazon with Calzibeno has the CVLIFE 6-9\" Adjustable Picatinny Bipod w/ Spring Return & Adapter (Black) for $22 - 50% off with coupon code&nbsp; MDSMVWUP at checkout = $11 with free shipping on $35+ or with Prime.",
-   "keyword": null
-  },
-  {
    "source": "RedFlagDeals",
    "title": "[Costco] KidKraft Summit Vista Swing Set",
    "url": "https://forums.redflagdeals.com/viewtopic.php?t=2825375&p=41248872#p41248872",
@@ -517,32 +324,6 @@
    "keyword": null
   },
   {
-   "source": "Ben's Bargains",
-   "title": "5-Pack FINETOO High Waisted Cotton Women's Underwear $5.69 at Amazon",
-   "url": "https://bensbargains.com/bargain/5-pack-finetoo-high-waisted-cotton-women-s-underwear-1078508/#rss",
-   "price": "$5.69",
-   "code": "CODE",
-   "percentOff": 50,
-   "store": "Amazon",
-   "score": null,
-   "date": "2026-09-07T22:37:00.000Z",
-   "snippet": "Limited time deal . Amazon with FINETOO has the 5-Pack FINETOO High Waisted Cotton Women's Underwear (Assorted Colors) for $9.49 - 50% off with coupon code HPVBBFHG at checkout = $5.69 &nbsp;with free shipping on $35+ or",
-   "keyword": null
-  },
-  {
-   "source": "Ben's Bargains",
-   "title": "VIZIO V4K75M-08 75\" Class 4K UHD LED HDR Smart TV $348 at Walmart",
-   "url": "https://bensbargains.com/bargain/vizio-v4k75m-08-75-class-4k-uhd-led-hdr-smart-tv-1078504/#rss",
-   "price": "$348",
-   "code": null,
-   "percentOff": null,
-   "store": "Walmart",
-   "score": null,
-   "date": "2026-09-07T22:30:00.000Z",
-   "snippet": "Walmart has the VIZIO V4K75M-08 75\" Class 4K UHD LED HDR Smart TV on sale for $348 with free shipping. 75\" DLED Panel, 60Hz Refresh Rate, Dolby Vision, HDR10+, HDR10, HLG 3 x HDMI, WiFi 6 Dual-Band, BT 5.2, DTS Virtual:X",
-   "keyword": null
-  },
-  {
    "source": "Slickdeals Frontpage",
    "title": "Prime Members in Select Locations: 9-Oz Amazon Grocery Sliced Deli Meats $1 + Free S&H on $25+",
    "url": "https://slickdeals.net/f/19982565-amazon-grocery-sliced-turkey-chicken-or-ham-9-oz-today-only-selected-areas-1?utm_source=rss&utm_content=fp&utm_medium=RSS2",
@@ -550,9 +331,9 @@
    "code": null,
    "percentOff": null,
    "store": "Amazon",
-   "score": 49,
+   "score": 48,
    "date": "2026-09-07T22:13:46.000Z",
-   "snippet": "This worked in OC, CA https://www.amazon.com/s?i=same-d...ref=GS626A Examples: [LIST][*] Oven Roasted Turkey Breast [ amazon.com ] [*] Smoke Turkey Breast [ amazon.com ]",
+   "snippet": "Amazon Grocery has for Prime Members in Select Locations: 9-Oz Amazon Grocery Sliced Deli Meats (Various) on sale for $1 . Delivery is free on $25+ orders. Thanks to Community Member zen_cohen for sharing this deal. Note",
    "keyword": null
   },
   {
@@ -602,7 +383,7 @@
    "code": "RGFJJ5DH",
    "percentOff": 50,
    "store": "Lenovo",
-   "score": 3,
+   "score": 5,
    "date": "2026-09-07T21:55:40.000Z",
    "snippet": "Lenovo Product Marketplace, Inc. via Amazon [ amazon.com ] has 2-Pack Wegear 30W USB-C GaN III Wall Charger w/ Cables (Black or White) on sale for $19.99 - 50% off when you apply promo code RGFJJ5DH at checkout = $9.99 (",
    "keyword": "airpods"
@@ -654,7 +435,7 @@
    "code": null,
    "percentOff": 5,
    "store": "Amazon",
-   "score": 30,
+   "score": 31,
    "date": "2026-09-07T21:36:21.000Z",
    "snippet": "Amazon [ amazon.com ] has 8-Count Paper Mate Profile 0.7mm Mechanical Pencils (Assorted) on sale for $3.97 - 5% off when you checkout via Subscribe & Save = $3.77 . Shipping is free w/ Prime or on orders $35+.[LIST][*] S",
    "keyword": null
@@ -665,11 +446,11 @@
    "url": "https://slickdeals.net/f/19982862-amazon-mbzoey-ipx7-waterproof-mini-electric-foil-shaver-13-99-w-code?utm_source=rss&utm_content=fp&utm_medium=RSS2",
    "price": "$14",
    "code": "OSE0ONW5",
-   "percentOff": null,
+   "percentOff": 74,
    "store": "Amazon",
-   "score": 56,
+   "score": 57,
    "date": "2026-09-07T21:30:52.000Z",
-   "snippet": "Hawen ELE via Amazon has Mbzoey Men's IPX7 Waterproof Electric Foil Shaver w/ Magnetic Cover (Sanded Grey, WFS02) on sale for $54.24 - $40.25 when you apply promo code OSE0ONW5 at checkout = $13.99 . Shipping is free . T",
+   "snippet": "Hawen ELE via Amazon has the Mbzoey Mini Electric Foil Shaver for Men for $54.24. Apply promo code OSE0ONW5 at checkout for 74% off = $13.99. Product Link: https://www.amazon.com/dp/B0F62R8...WP7A5 G0UX2 Promo Code: OSE0",
    "keyword": null
   },
   {
@@ -693,7 +474,7 @@
    "code": "CODE",
    "percentOff": null,
    "store": "Amazon",
-   "score": 43,
+   "score": 44,
    "date": "2026-09-07T21:18:24.000Z",
    "snippet": "LvGder via Amazon [ amazon.com ] has 3-Pack 10' 60W KYEHD USB C to USB C Fast Charging Cable (Grey White) on sale for $9.99 - $6 off when you enter the coupon code GXSOV1XX = $3.99 . Shipping is free w/ Prime or on $35+.",
    "keyword": null
@@ -709,32 +490,6 @@
    "score": null,
    "date": "2026-09-07T20:57:38.000Z",
    "snippet": "CNE OFFER 80$/MONTH FOR TV AND INTERNET 250$ GIFT CARD 60$ FOR INTERNET ONLY 150$ GIFT CARD Just write your cellphone number and someone will contact you. Statistics: Posted by Redwinehere — Sep 7th, 2026 4:57 pm",
-   "keyword": null
-  },
-  {
-   "source": "Slickdeals Frontpage",
-   "title": "ASUS ROG Flow Z13 Tablet: 13.4” QHD+ IPS 180Hz, Ryzen AI MAX 390, 32GB RAM, 1TB SSD $1700 + Free S&H",
-   "url": "https://slickdeals.net/f/19979076-asus-rog-flow-z13-tablet-13-4-qhd-ips-180hz-ryzen-ai-max-390-32gb-lpddr5x-8000mhz-1tb-ssd-1699-99?utm_source=rss&utm_content=fp&utm_medium=RSS2",
-   "price": "$1700",
-   "code": null,
-   "percentOff": null,
-   "store": "Amazon",
-   "score": 18,
-   "date": "2026-09-07T20:54:54.000Z",
-   "snippet": "Available: ASUS Store [ asus.com ] Amazon [ amazon.com ] SPECS: [list][*]13.4-inch 2.5K (2560 × 1600) 16:10 IPS display with 100% DCI-P3, 180Hz Adaptive-Sync, Pantone Validated, touchscreen and stylus support[*]AMD Ryzen",
-   "keyword": null
-  },
-  {
-   "source": "Slickdeals Frontpage",
-   "title": "4500V PhatroyYee Solar Bug Zapper w/ 10W Solar Panel & 4000mAh Rechargeable Battery $30 + Free S&H",
-   "url": "https://slickdeals.net/f/19844535-4500v-phatroyyee-solar-bug-zapper-w-10w-solar-panel-4000mah-rechargeable-battery-30-free-s-h?utm_source=rss&utm_content=fp&utm_medium=RSS2",
-   "price": "$30",
-   "code": "LV5YWP7Z",
-   "percentOff": 50,
-   "store": "Amazon",
-   "score": 161,
-   "date": "2026-09-07T20:54:14.000Z",
-   "snippet": "Update: This popular deal is still available. KuccHero via Amazon has 4500V PhatroyYee Solar Bug Zapper w/ 10W Solar Panel & 4000mAh Rechargeable Battery on sale for $59.99 - $30 when you apply 50% off promo code LV5YWP7",
    "keyword": null
   },
   {
@@ -829,19 +584,6 @@
    "keyword": "playstation 5"
   },
   {
-   "source": "RedFlagDeals",
-   "title": "[Costco] Wine making Kits",
-   "url": "https://forums.redflagdeals.com/viewtopic.php?t=2825356&p=41248464#p41248464",
-   "price": null,
-   "code": null,
-   "percentOff": null,
-   "store": "Costco",
-   "score": null,
-   "date": "2026-09-07T17:42:22.000Z",
-   "snippet": "These are great kits, have been using for years and have not seen a price this low in years. Statistics: Posted by Jarnail — Sep 7th, 2026 1:42 pm",
-   "keyword": null
-  },
-  {
    "source": "Slickdeals",
    "title": "Hisense 100\" Class QD7 Series 4K Hi-QLED Smart TV w/ Allstate 3-Year Protection Plan Bundle Included for 5 Years of Total Coverage $1499.99",
    "url": "https://slickdeals.net/f/19983108-hisense-100-class-qd7-series-4k-hi-qled-smart-tv-w-allstate-3-year-protection-plan-bundle-included-for-5-years-of-total-coverage-1499-99?utm_source=rss&utm_content=def&utm_medium=RSS2",
@@ -901,7 +643,7 @@
    "code": null,
    "percentOff": null,
    "store": "Walmart",
-   "score": 27,
+   "score": 28,
    "date": "2026-09-07T12:42:44.000Z",
    "snippet": "Cheaper than the previous thumbed up deal. Hisense 65\" M7 Mini-LED QLED 4K UHD Google Smart TV (65M7SG, 2026 Model) - Mini LED, Hi - QLED, Dolby Vision, Full Array Local Dimming, HDR10+, Built-in Subwoofer, Game Mode Pro",
    "keyword": "hisense tv"
@@ -992,7 +734,7 @@
    "code": null,
    "percentOff": null,
    "store": null,
-   "score": -6,
+   "score": -7,
    "date": "2026-09-07T04:49:45.000Z",
    "snippet": "The Flower Kingdom grows even bigger on Nintendo Switch 2! Upgrade your action-packed adventure to save the Flower Kingdom from Bowser, Bowser Jr.—and now, all seven Koopalings—solo or with friends! More ways to play In ",
    "keyword": "nintendo switch"
@@ -4587,6 +4329,19 @@
   },
   {
    "source": "RedFlagDeals",
+   "title": "[Tangerine] Tangerine - Move payroll for $20/month rebate Shell",
+   "url": "https://forums.redflagdeals.com/viewtopic.php?t=2825384&p=41248987#p41248987",
+   "price": "$20",
+   "code": null,
+   "percentOff": null,
+   "store": null,
+   "score": null,
+   "date": null,
+   "snippet": "Just logged into my tangerine account and got this offer. Targetted. Move your payroll and spend $20 at shell. Then, Get Free $20 of shell x up to 6 months rebated. The terms say you need to deposit full payroll and they",
+   "keyword": null
+  },
+  {
+   "source": "RedFlagDeals",
    "title": "[Fortnine] Indian Branded Motorcycle Riding Gloves 81% Off $18-$23/pair $49 FS",
    "url": "https://forums.redflagdeals.com/viewtopic.php?t=2825372&p=41248797#p41248797",
    "price": "$18",
@@ -4635,19 +4390,6 @@
    "score": null,
    "date": null,
    "snippet": "Add the bag to cart and use EXTRA25 for additional 25% off Enjoy (: Statistics: Posted by Graveskinner — Sep 7th, 2026 2:36 pm",
-   "keyword": null
-  },
-  {
-   "source": "RedFlagDeals",
-   "title": "[St Louis Bar and Grill] St Louis $ 17.99 AYCE Angus burgers. Starts Sept 11. Lettuce wrap available",
-   "url": "https://forums.redflagdeals.com/viewtopic.php?t=2825357&p=41248473#p41248473",
-   "price": "$17.99",
-   "code": null,
-   "percentOff": null,
-   "store": null,
-   "score": null,
-   "date": null,
-   "snippet": "All-You-Can-Eat Angus Burgers starts Friday, September 11, at all locations across Canada for $17.99. $2 more for fries No drink purchase required Statistics: Posted by sprung — Sep 7th, 2026 1:49 pm",
    "keyword": null
   }
  ]
