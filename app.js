@@ -100,7 +100,16 @@
     $("#liveCount").textContent = hits.length ? `${hits.length} found` : "";
     box.classList.remove("hidden");
     if (!hits.length) {
-      $("#liveList").innerHTML = `<p class="muted">No live posts match “${clean}” yet. This list tracks: ${LIVE.keywords.join(", ")}. Add yours in <code>scraper/keywords.json</code>, or use the search links below.</p>`;
+      const e = encodeURIComponent(clean);
+      $("#liveList").innerHTML = `
+        <p class="muted">Nothing in the auto-tracked pool for “${clean}” yet — search the deal communities live instead:</p>
+        <div class="live-fallback">
+          <a class="fb" href="https://slickdeals.net/newsearch.php?q=${e}&searcharea=deals&searchin=first&sort=newest" ${targetAttr()}>🔥 Slickdeals: newest “${clean}” deals</a>
+          <a class="fb" href="https://www.reddit.com/r/deals/search/?q=${e}&restrict_sr=1&sort=new" ${targetAttr()}>👾 Reddit r/deals</a>
+          <a class="fb" href="https://www.dealnews.com/search.html?search=${e}" ${targetAttr()}>📰 DealNews</a>
+          <a class="fb" href="https://www.google.com/search?q=${e}+deal+OR+%22promo+code%22&tbs=qdr:w" ${targetAttr()}>🔎 Google: deals this week</a>
+        </div>
+        <p class="muted small">Tracked products are refreshed every 6 h. To auto-track “${clean}”, add it to <code>scraper/keywords.json</code>.</p>`;
       return;
     }
     $("#liveList").innerHTML = hits.slice(0, 40).map((d) => `

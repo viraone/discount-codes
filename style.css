@@ -213,3 +213,9 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
 .live-top .src { color: var(--muted); margin-left: auto; }
 .live-title { font-weight: 600; line-height: 1.35; }
 .live code { background: var(--card); padding: 1px 6px; border-radius: 4px; }
+
+/* --- live fallback --- */
+.live-fallback { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 10px 0; }
+.fb { display: block; padding: 14px 16px; background: var(--bg); border: 1px solid #5a2a3a; border-radius: 10px; color: var(--text); text-decoration: none; font-weight: 700; }
+.fb:hover { border-color: #ff5c7a; background: var(--card-hover); }
+.muted.small { font-size: 13px; }
