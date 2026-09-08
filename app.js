@@ -1,5 +1,7 @@
 (function () {
   const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const safeUrl = (u) => (/^https?:\/\//i.test(u) ? esc(u) : "#");
   const results = $("#results");
   const queryInput = $("#query");
   const newTab = $("#newTab");
@@ -79,10 +81,10 @@
 
   const STOP = new Set(["tv", "the", "a", "and", "for", "with", "inch", "in", "of", "flat", "screen"]);
   function terms(q) { return q.toLowerCase().split(/\s+/).filter((t) => t && !STOP.has(t)); }
-  const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const reEsc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   function matchDeal(d, ts) {
     const hay = `${d.title} ${d.snippet} ${d.store || ""}`.toLowerCase();
-    return ts.every((t) => new RegExp(`(^|[^a-z0-9])${esc(t)}(s|es)?(?![a-z0-9])`, "i").test(hay));
+    return ts.every((t) => new RegExp(`(^|[^a-z0-9])${reEsc(t)}(s|es)?(?![a-z0-9])`, "i").test(hay));
   }
   function ago(iso) {
     const h = Math.round((Date.now() - Date.parse(iso)) / 36e5);
@@ -103,26 +105,26 @@
     if (!hits.length) {
       const e = encodeURIComponent(clean);
       $("#liveList").innerHTML = `
-        <p class="muted">Nothing in the auto-tracked pool for “${clean}” yet — search the deal communities live instead:</p>
+        <p class="muted">Nothing in the auto-tracked pool for “${esc(clean)}” yet — search the deal communities live instead:</p>
         <div class="live-fallback">
-          <a class="fb" href="https://slickdeals.net/newsearch.php?q=${e}&searcharea=deals&searchin=first&sort=newest" ${targetAttr()}>🔥 Slickdeals: newest “${clean}” deals</a>
+          <a class="fb" href="https://slickdeals.net/newsearch.php?q=${e}&searcharea=deals&searchin=first&sort=newest" ${targetAttr()}>🔥 Slickdeals: newest “${esc(clean)}” deals</a>
           <a class="fb" href="https://www.reddit.com/r/deals/search/?q=${e}&restrict_sr=1&sort=new" ${targetAttr()}>👾 Reddit r/deals</a>
           <a class="fb" href="https://www.dealnews.com/search.html?search=${e}" ${targetAttr()}>📰 DealNews</a>
           <a class="fb" href="https://www.google.com/search?q=${e}+deal+OR+%22promo+code%22&tbs=qdr:w" ${targetAttr()}>🔎 Google: deals this week</a>
         </div>
-        <p class="muted small">Tracked products are refreshed every 6 h. To auto-track “${clean}”, add it to <code>scraper/keywords.json</code>.</p>`;
+        <p class="muted small">Tracked products are refreshed every 6 h. To auto-track “${esc(clean)}”, add it to <code>scraper/keywords.json</code>.</p>`;
       return;
     }
     $("#liveList").innerHTML = hits.slice(0, 40).map((d) => `
-      <a class="live-card" href="${d.url}" ${targetAttr()}>
+      <a class="live-card" href="${safeUrl(d.url)}" ${targetAttr()}>
         <div class="live-top">
-          ${d.price ? `<span class="price">${d.price}</span>` : ""}
-          ${d.percentOff ? `<span class="pct">${d.percentOff}% off</span>` : ""}
-          ${d.code ? `<span class="code">CODE: ${d.code}</span>` : ""}
-          ${d.store ? `<span class="store">${d.store}</span>` : ""}
-          <span class="src">${d.source}${d.score != null ? ` · 👍 ${d.score}` : ""}${d.date ? ` · ${ago(d.date)}` : ""}</span>
+          ${d.price ? `<span class="price">${esc(d.price)}</span>` : ""}
+          ${d.percentOff ? `<span class="pct">${Number(d.percentOff)}% off</span>` : ""}
+          ${d.code ? `<span class="code">CODE: ${esc(d.code)}</span>` : ""}
+          ${d.store ? `<span class="store">${esc(d.store)}</span>` : ""}
+          <span class="src">${esc(d.source)}${d.score != null ? ` · 👍 ${Number(d.score)}` : ""}${d.date ? ` · ${ago(d.date)}` : ""}</span>
         </div>
-        <div class="live-title">${d.title}</div>
+        <div class="live-title">${esc(d.title)}</div>
       </a>`).join("");
   }
 
