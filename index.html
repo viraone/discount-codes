@@ -37,7 +37,7 @@
       <p class="label">Searching for</p>
       <h2 id="summaryQ"></h2>
       <p class="muted">Cleaned up from: “<span id="summaryRaw"></span>” · <button id="editQ" class="link">edit</button></p>
-      <p class="muted">Offer badges are typical/standing discounts, last verified <span id="verified"></span>. Click a card for today's live codes.</p>
+      <p class="muted">Retailer links open sorted by price, low to high. Offer badges are typical/standing discounts, last verified <span id="verified"></span>. Click a card for today's live codes.</p>
     </div>
     <div class="tools">
       <button id="openAll" class="ghost">⚡ Open all top sites</button>
@@ -51,7 +51,17 @@
         <h2>🔴 Live deals right now</h2>
         <p>Auto-refreshed every 6 hours from Slickdeals, Ben's Bargains &amp; RedFlagDeals. Updated <span id="liveUpdated">—</span>.</p>
       </div>
-      <span id="liveCount" class="count"></span>
+      <div class="live-controls">
+        <span id="liveCount" class="count"></span>
+        <label class="sortbox">Sort
+          <select id="sort">
+            <option value="price-asc" selected>Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="newest">Newest</option>
+            <option value="score">Most upvoted</option>
+          </select>
+        </label>
+      </div>
     </div>
     <div id="liveList" class="live-list"></div>
   </section>

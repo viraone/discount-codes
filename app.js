@@ -90,6 +90,22 @@
     const h = Math.round((Date.now() - Date.parse(iso)) / 36e5);
     return h < 1 ? "just now" : h < 48 ? `${h}h ago` : `${Math.round(h / 24)}d ago`;
   }
+  const priceNum = (d) => (d.price ? Number(d.price.replace(/[$,]/g, "")) : NaN);
+  function sortDeals(list, mode) {
+    const arr = [...list];
+    const byDate = (a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
+    if (mode === "newest") return arr.sort(byDate);
+    if (mode === "score") return arr.sort((a, b) => (b.score ?? -1) - (a.score ?? -1) || byDate(a, b));
+    // Price sorts: deals without a price go last.
+    return arr.sort((a, b) => {
+      const pa = priceNum(a), pb = priceNum(b);
+      if (isNaN(pa) && isNaN(pb)) return byDate(a, b);
+      if (isNaN(pa)) return 1;
+      if (isNaN(pb)) return -1;
+      return mode === "price-desc" ? pb - pa : pa - pb;
+    });
+  }
+
   function renderLive() {
     const box = $("#live");
     if (!LIVE || !clean) return;
@@ -99,6 +115,7 @@
     let hits = LIVE.deals.filter((d) => matchDeal(d, ts));
     if (wantsTv) hits = hits.filter((d) => /\b(tv|television|oled|qled|bravia|\d{2}["”]|\d{2}-?inch)\b/i.test(d.title));
     if (!hits.length && ts.length > 1) hits = LIVE.deals.filter((d) => matchDeal(d, ts.slice(0, 1)));
+    hits = sortDeals(hits, $("#sort").value);
     $("#liveUpdated").textContent = LIVE.updated ? ago(LIVE.updated) : "—";
     $("#liveCount").textContent = hits.length ? `${hits.length} found` : "";
     box.classList.remove("hidden");
@@ -145,6 +162,7 @@
 
   $("#searchForm").addEventListener("submit", (e) => { e.preventDefault(); search(queryInput.value); });
   newTab.addEventListener("change", () => { render(); renderLive(); });
+  $("#sort").addEventListener("change", renderLive);
   $("#presets").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-q]");
     if (!b) return;

@@ -219,3 +219,9 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
 .fb { display: block; padding: 14px 16px; background: var(--bg); border: 1px solid #5a2a3a; border-radius: 10px; color: var(--text); text-decoration: none; font-weight: 700; }
 .fb:hover { border-color: #ff5c7a; background: var(--card-hover); }
 .muted.small { font-size: 13px; }
+
+/* --- sort control --- */
+.live-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.sortbox { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
+.sortbox select { font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
+.sortbox select:focus { outline: none; border-color: var(--accent); }
