@@ -211,7 +211,7 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
 .live-top .code { background: var(--accent); color: #1a1400; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-family: ui-monospace, Menlo, monospace; }
 .live-top .store { text-transform: capitalize; color: var(--accent-2); font-weight: 600; }
 .live-top .src { color: var(--muted); margin-left: auto; }
-.live-title { font-weight: 600; line-height: 1.35; }
+.tag-new { color: #1a1400; background: var(--accent); padding: 1px 6px; border-radius: 4px; font-weight: 800; }
 .live code { background: var(--card); padding: 1px 6px; border-radius: 4px; }
 
 /* --- live fallback --- */

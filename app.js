@@ -2,6 +2,7 @@
   const $ = (s) => document.querySelector(s);
   const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const safeUrl = (u) => (/^https?:\/\//i.test(u) ? esc(u) : "#");
+  const highlightNew = (s) => esc(s).replace(/\[(new)\]/gi, '<span class="tag-new">[$1]</span>');
   const results = $("#results");
   const queryInput = $("#query");
   const newTab = $("#newTab");
@@ -141,7 +142,7 @@
           ${d.store ? `<span class="store">${esc(d.store)}</span>` : ""}
           <span class="src">${esc(d.source)}${d.score != null ? ` · 👍 ${Number(d.score)}` : ""}${d.date ? ` · ${ago(d.date)}` : ""}</span>
         </div>
-        <div class="live-title">${esc(d.title)}</div>
+        <div class="live-title">${highlightNew(d.title)}</div>
       </a>`).join("");
   }
 
