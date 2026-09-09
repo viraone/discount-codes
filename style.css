@@ -225,3 +225,10 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
 .sortbox { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
 .sortbox select { font-size: 14px; font-weight: 600; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
 .sortbox select:focus { outline: none; border-color: var(--accent); }
+
+/* --- fix clipped sort control --- */
+.live .cat-head { align-items: flex-start; }
+.live .cat-head > div:first-child { flex: 1 1 320px; min-width: 0; }
+.live-controls { flex: 0 0 auto; margin-left: auto; }
+.live-top .src { flex-basis: 100%; margin-left: 0; }
+@media (min-width: 700px) { .live-top .src { flex-basis: auto; margin-left: auto; } }
