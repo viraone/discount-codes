@@ -77,7 +77,12 @@
   let LIVE = null;
   fetch("data/live-deals.json", { cache: "no-store" })
     .then((r) => (r.ok ? r.json() : null))
-    .then((j) => { LIVE = j; renderLive(); })
+    .then((j) => {
+      LIVE = j;
+      // Deals Slickdeals has marked expired stay in the file (so the scraper remembers the verdict) but never show.
+      if (LIVE && LIVE.deals) LIVE.deals = LIVE.deals.filter((d) => d.expired !== true);
+      renderLive();
+    })
     .catch(() => {});
 
   const STOP = new Set(["tv", "the", "a", "and", "for", "with", "inch", "in", "of", "flat", "screen"]);
@@ -155,6 +160,7 @@
           ${d.code ? `<span class="code">CODE: ${esc(d.code)}</span>` : ""}
           ${d.store ? `<span class="store">${esc(d.store)}</span>` : ""}
           <span class="src">${esc(d.source)}${d.score != null ? ` · 👍 ${Number(d.score)}` : ""}${d.date ? ` · ${ago(d.date)}` : ""}</span>
+          ${d.expired === false && d.checked ? `<span class="live-ok">✓ still live ${ago(d.checked)}</span>` : ""}
         </div>
         <div class="live-title">${highlightNew(d.title)}</div>
       </a>`).join("");

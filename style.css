@@ -208,6 +208,7 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
 .live-card:hover { border-color: #ff5c7a; }
 .live-top { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 6px; font-size: 13px; }
 .live-top .price { font-weight: 800; font-size: 18px; color: #3ddc84; }
+.live-top .live-ok { color: #3ddc84; font-weight: 700; }
 .live-top .pct { background: #ff5c7a; color: #fff; padding: 2px 8px; border-radius: 999px; font-weight: 700; }
 .live-top .code { background: var(--accent); color: #1a1400; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-family: ui-monospace, Menlo, monospace; }
 .live-top .store { text-transform: capitalize; color: var(--accent-2); font-weight: 600; }
