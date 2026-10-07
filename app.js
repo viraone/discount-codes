@@ -89,10 +89,17 @@
   function terms(q) { return q.toLowerCase().split(/\s+/).filter((t) => t && !STOP.has(t)); }
   const reEsc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const hasTerm = (text, t) => new RegExp(`(^|[^a-z0-9])${reEsc(t)}(s|es)?(?![a-z0-9])`, "i").test(text);
+  // Titles only (plus the store name, so "amazon airpods" works). A description can name other
+  // products — a Woot fan-gear roundup lists an "AirPods Pro case" — so it never counts.
   function matchDeal(d, ts) {
-    const hay = `${d.title} ${d.snippet} ${d.store || ""}`;
+    const hay = `${d.title} ${d.store || ""}`;
     return ts.every((t) => hasTerm(hay, t));
   }
+  // Accessories (cases, chargers, docks...) sink to the bottom unless the search asks for one.
+  // Text in parentheses is ignored (a watch lists "(Aluminum Case, Sport Band)" as its own parts),
+  // and so are "charging case", "titanium case" and "wireless charging", which describe the product itself.
+  const ACCESSORY = /\b(cases?|covers?|skins?|straps?|bands?|chargers?|cables?|docks?|holders?|mounts?|protectors?|sleeves?|pouch|ear ?tips|adapters?)\b/i;
+  const isAccessory = (title) => ACCESSORY.test(title.replace(/\([^)]*\)/g, " ").replace(/\b(charging|carrying|usb-c|aluminum|titanium|steel) case\b/gi, "").replace(/\bwireless charging\b/gi, ""));
   // Close matches, used only when no deal matches every word. The title must contain all but
   // one of the words the pool knows (never fewer than two), including the rarest of them — so
   // "mac ultra studio" finds Mac Studio deals but never every Mac, and "airpods pro 2" can't
@@ -135,6 +142,7 @@
     const close = !hits.length;
     if (close) hits = closeMatches(ts).filter(tvOk);
     hits = sortDeals(hits, $("#sort").value);
+    if (!ACCESSORY.test(clean)) hits = [...hits.filter((d) => !isAccessory(d.title)), ...hits.filter((d) => isAccessory(d.title))];
     $("#liveUpdated").textContent = LIVE.updated ? ago(LIVE.updated) : "—";
     $("#liveCount").textContent = hits.length ? `${hits.length} ${close ? "close" : "found"}` : "";
     box.classList.remove("hidden");
