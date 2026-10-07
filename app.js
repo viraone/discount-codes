@@ -83,9 +83,21 @@
   const STOP = new Set(["tv", "the", "a", "and", "for", "with", "inch", "in", "of", "flat", "screen"]);
   function terms(q) { return q.toLowerCase().split(/\s+/).filter((t) => t && !STOP.has(t)); }
   const reEsc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const hasTerm = (text, t) => new RegExp(`(^|[^a-z0-9])${reEsc(t)}(s|es)?(?![a-z0-9])`, "i").test(text);
   function matchDeal(d, ts) {
-    const hay = `${d.title} ${d.snippet} ${d.store || ""}`.toLowerCase();
-    return ts.every((t) => new RegExp(`(^|[^a-z0-9])${reEsc(t)}(s|es)?(?![a-z0-9])`, "i").test(hay));
+    const hay = `${d.title} ${d.snippet} ${d.store || ""}`;
+    return ts.every((t) => hasTerm(hay, t));
+  }
+  // Close matches, used only when no deal matches every word. The title must contain all but
+  // one of the words the pool knows (never fewer than two), including the rarest of them — so
+  // "mac ultra studio" finds Mac Studio deals but never every Mac, and "airpods pro 2" can't
+  // decay into anything that says "pro" and "2".
+  function closeMatches(ts) {
+    const known = ts.map((t) => [t, LIVE.deals.filter((d) => hasTerm(d.title, t)).length]).filter(([, n]) => n > 0);
+    if (known.length < 2) return [];
+    const rarest = known.slice().sort((a, b) => a[1] - b[1])[0][0];
+    const need = Math.max(2, known.length - 1);
+    return LIVE.deals.filter((d) => hasTerm(d.title, rarest) && ts.filter((t) => hasTerm(d.title, t)).length >= need);
   }
   function ago(iso) {
     const h = Math.round((Date.now() - Date.parse(iso)) / 36e5);
@@ -110,15 +122,16 @@
   function renderLive() {
     const box = $("#live");
     if (!LIVE || !clean) return;
-    let ts = terms(clean);
+    const ts = terms(clean);
     // If the query mentions a TV, also require TV-ish words so speakers/headphones don't leak in.
     const wantsTv = /\b(tv|flat screen|television|oled|bravia)\b/i.test(clean);
-    let hits = LIVE.deals.filter((d) => matchDeal(d, ts));
-    if (wantsTv) hits = hits.filter((d) => /\b(tv|television|oled|qled|bravia|\d{2}["”]|\d{2}-?inch)\b/i.test(d.title));
-    if (!hits.length && ts.length > 1) hits = LIVE.deals.filter((d) => matchDeal(d, ts.slice(0, 1)));
+    const tvOk = (d) => !wantsTv || /\b(tv|television|oled|qled|bravia|\d{2}["”]|\d{2}-?inch)\b/i.test(d.title);
+    let hits = LIVE.deals.filter((d) => matchDeal(d, ts) && tvOk(d));
+    const close = !hits.length;
+    if (close) hits = closeMatches(ts).filter(tvOk);
     hits = sortDeals(hits, $("#sort").value);
     $("#liveUpdated").textContent = LIVE.updated ? ago(LIVE.updated) : "—";
-    $("#liveCount").textContent = hits.length ? `${hits.length} found` : "";
+    $("#liveCount").textContent = hits.length ? `${hits.length} ${close ? "close" : "found"}` : "";
     box.classList.remove("hidden");
     if (!hits.length) {
       const e = encodeURIComponent(clean);
@@ -133,7 +146,8 @@
         <p class="muted small">Tracked products are refreshed every 6 h. To auto-track “${esc(clean)}”, add it to <code>scraper/keywords.json</code>.</p>`;
       return;
     }
-    $("#liveList").innerHTML = hits.slice(0, 40).map((d) => `
+    const note = close ? `<p class="muted small">No deal matches every word of “${esc(clean)}” — these match most of it:</p>` : "";
+    $("#liveList").innerHTML = note + hits.slice(0, 40).map((d) => `
       <a class="live-card" href="${safeUrl(d.url)}" ${targetAttr()}>
         <div class="live-top">
           ${d.price ? `<span class="price">${esc(d.price)}</span>` : ""}

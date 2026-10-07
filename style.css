@@ -203,6 +203,7 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
 .live { margin: 28px 0 8px; padding: 20px 24px; background: linear-gradient(180deg, #1a1420, var(--card)); border: 1px solid #5a2a3a; border-radius: var(--radius); }
 .live .count { color: var(--muted); font-size: 14px; }
 .live-list { display: grid; gap: 10px; }
+.live-list > p { margin: 0; }
 .live-card { display: block; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); }
 .live-card:hover { border-color: #ff5c7a; }
 .live-top { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 6px; font-size: 13px; }
