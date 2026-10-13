@@ -20,7 +20,12 @@
     [/\bphone\b/gi, "smartphone"],
   ];
   function cleanQuery(s) {
-    let q = s.toLowerCase().replace(/[^a-z0-9\s'"-]/g, " ");
+    // Catalog titles pasted from a store listing ("Epson PowerLite E20 LCD Projector - 4:3 - Ceiling
+    // Mountable") carry spec segments after " - ", " | " or ",". Keep the product segment when it's
+    // specific enough on its own (3+ words).
+    const first = s.split(/\s+[-–|]\s+|,\s+/)[0].trim();
+    if (first.split(/\s+/).length >= 3) s = first;
+    let q = s.toLowerCase().replace(/[^a-z0-9\s'"-]/g, " ").replace(/(^|\s)-+(?=\s|$)/g, " ");
     q = q.replace(FILLER, " ");
     for (const [re, to] of SYNONYMS) q = q.replace(re, to);
     q = q.replace(/\btv tv\b/g, "tv").replace(/\s+/g, " ").trim();
