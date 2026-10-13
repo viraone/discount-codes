@@ -13,7 +13,7 @@
   // Turn "i want a sony flat screen!!" into "sony flat screen tv".
   // "to" is only filler after a verb ("want to buy") — it's part of the product in "male to male", "usb to hdmi".
   const VERB_TO = /\b(want|wanna|need|like|love|looking|going|have|trying|got)\s+to\b/gi;
-  const FILLER = /\b(i|i'd|id|i'm|im|we|we'd|want|wanna|would|like|love|need|buy|get|find|looking|look|for|a|an|the|some|new|cheap|cheapest|best|good|please|pls|discount|discounts|coupon|coupons|code|codes|promo|deal|deals|on|of|my|me|us|can|you|help|show)\b/gi;
+  const FILLER = /\b(i|i'd|id|i'm|im|we|we'd|want|wanna|would|like|love|need|buy|get|find|looking|look|for|with|a|an|the|some|new|cheap|cheapest|best|good|please|pls|discount|discounts|coupon|coupons|code|codes|promo|deal|deals|on|of|my|me|us|can|you|help|show)\b/gi;
   const SYNONYMS = [
     [/\bflat ?screen\b/gi, "flat screen tv"],
     [/\btelevision\b/gi, "tv"],
@@ -39,6 +39,7 @@
       .replace(VERB_TO, " ");
     q = q.replace(FILLER, " ");
     for (const [re, to] of SYNONYMS) q = q.replace(re, to);
+    q = q.replace(/\b(\d+) (gb|tb|mb|ghz|hz|mm|cm|in|ft|lb|oz|w|mah)\b/g, "$1$2");   // "256 gb" -> "256gb", how stores write it
     q = q.replace(/\btv tv\b/g, "tv").replace(/\s+/g, " ").trim();
     return q || s.trim();
   }
@@ -65,13 +66,16 @@
   // Sites index different things, so a catalog title that works at Best Buy finds nothing on
   // Slickdeals or RetailMeNot. "brand" = first word when it's a word ("epson"); "core" = brand +
   // the category noun, the last plain word that isn't a size or a modifier ("epson projector").
-  const MODIFIER = /^(pro|max|plus|mini|ultra|air|lite|se|gen|edition|series|class|inch|in|ft|mm|cm|black|white|silver|gray|grey|blue|red|green|gold|new|used|refurbished)$/;
+  const MODIFIER = /^(pro|max|plus|mini|ultra|air|lite|se|gen|edition|series|class|inch|in|ft|mm|cm|black|white|silver|gray|grey|blue|red|green|gold|new|used|refurbished|memory|ram|storage|ssd|unified|gb|tb|chip|model)$/;
+  // Product lines whose coupons live under the parent brand's store ("mac" on RetailMeNot is MAC cosmetics).
+  const BRAND_OF = { mac: "apple", macbook: "apple", imac: "apple", ipad: "apple", iphone: "apple", airpods: "apple", galaxy: "samsung", pixel: "google", nest: "google", chromecast: "google", fitbit: "google", bravia: "sony", playstation: "sony", ps5: "sony", soundcore: "anker", eufy: "anker", nebula: "anker", surface: "microsoft", xbox: "microsoft", kindle: "amazon", echo: "amazon", roomba: "irobot", quest: "meta", oculus: "meta", switch: "nintendo" };
   function queryFor(mode, q) {
     const w = q.split(" ");
     const brand = /^[a-z][a-z'-]*$/.test(w[0]) ? w[0] : "";
-    if (mode === "brand") return brand || q;
+    if (mode === "brand") return BRAND_OF[brand] || brand || q;
     if (mode === "core") {
-      const cat = w.slice(1).reverse().find((t) => /^[a-z][a-z-]*$/.test(t) && !MODIFIER.test(t)) || w[w.length - 1];
+      // No category noun ("macbook air 15 inch", "galaxy s25 ultra 512gb") -> the product line, i.e. the second word.
+      const cat = w.slice(1).reverse().find((t) => /^[a-z][a-z-]*$/.test(t) && !MODIFIER.test(t)) || w[1];
       return brand && w.length > 3 ? `${brand} ${cat}` : q;
     }
     return q;
