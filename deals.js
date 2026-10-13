@@ -19,7 +19,7 @@ const DEALS = {
   "DontPayFull": { offer: "Codes + price-drop alerts, varies", type: "code" },
 
   // Retailers
-  "Sony Store (if Sony product)": { offer: "Frequent $100–$500 off select BRAVIA; free shipping", type: "sale" },
+  "Sony Store": { offer: "Frequent $100–$500 off select BRAVIA; free shipping", type: "sale" },
   "Sony Certified Refurbished": { offer: "Up to 30% off list w/ 90-day warranty", type: "refurb" },
   "Best Buy": { offer: "Weekly TV sales; price match; My Best Buy Plus extras", type: "sale" },
   "Best Buy Open-Box": { offer: "Typically 10–30% off (Excellent/Certified)", type: "refurb" },
@@ -35,7 +35,7 @@ const DEALS = {
   "Abt Electronics": { offer: "Price match + free shipping", type: "sale" },
   "Crutchfield": { offer: "Free shipping + free lifetime tech support", type: "sale" },
   "Newegg": { offer: "Shell Shocker daily deals; promo codes", type: "sale" },
-  "eBay (Sony official outlet too)": { offer: "Certified Refurb up to 40% off; eBay coupon codes", type: "refurb" },
+  "eBay (brand outlets too)": { offer: "Certified Refurb up to 40% off; eBay coupon codes", type: "refurb" },
   "Woot (Amazon deals)": { offer: "Daily deals up to 60% off; free Prime shipping", type: "sale" },
 
   // Cashback
@@ -60,7 +60,7 @@ const DEALS = {
   // Communities
   "Slickdeals": { offer: "Front-page deals; frontpage TVs often 20–40% off", type: "community" },
   "Reddit r/deals": { offer: "User-posted deals & codes", type: "community" },
-  "Reddit r/buildapcsales (TVs)": { offer: "Monitor/TV price drops posted daily", type: "community" },
+  "Reddit r/buildapcsales": { offer: "Monitor/TV price drops posted daily", type: "community" },
   "Reddit r/bravia": { offer: "Sony owners share sales & codes", type: "community" },
   "Reddit r/4kTV": { offer: "TV deal threads & buying advice", type: "community" },
   "DealNews": { offer: "Editor-vetted deals, \"lowest price ever\" tags", type: "community" },
@@ -78,7 +78,8 @@ const DEALS = {
   "Google: \"discount code\"": { offer: "Alternate phrasing catches more", type: "tool" },
   "Google: open box / refurbished": { offer: "Finds refurb listings across stores", type: "tool" },
   "Google: student / military discount": { offer: "Finds eligibility programs", type: "tool" },
-  "Google News: Sony TV deals": { offer: "News-site deal roundups", type: "tool" },
+  "Google News: deals": { offer: "News-site deal roundups", type: "tool" },
+  "Google: brand's official store": { offer: "Brands often run site-only codes & bundles", type: "tool" },
   "DuckDuckGo: coupon": { offer: "Different index = different results", type: "tool" },
   "Bing: promo code": { offer: "Earns Microsoft Rewards while searching", type: "tool" },
   "YouTube: deal reviews": { offer: "Creators often share exclusive codes", type: "tool" },

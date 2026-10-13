@@ -234,3 +234,14 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
 .live-controls { flex: 0 0 auto; margin-left: auto; }
 .live-top .src { flex-basis: 100%; margin-left: 0; }
 @media (min-width: 700px) { .live-top .src { flex-basis: auto; margin-left: auto; } }
+
+/* --- product shown on every card + sticky "Searching for" bar --- */
+.card .q { color: var(--accent-2); font-size: 13px; font-weight: 600; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card .q.generic { color: var(--muted); font-weight: 400; text-transform: none; font-style: italic; white-space: normal; }
+.stickyq {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 16px; font-size: 14px; color: var(--muted);
+  background: rgba(11, 15, 25, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
+}
+.stickyq b { color: var(--text); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70vw; }

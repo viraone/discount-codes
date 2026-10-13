@@ -46,31 +46,43 @@
     return `<span class="deal deal-${d.type}"><b>${TYPE_LABEL[d.type] || ""}</b> ${d.offer}</span>`;
   }
 
+  // Brand/category-specific sources (Sony Store, r/4kTV...) only show when the query is about them.
+  const visibleItems = (cat) => cat.items.filter((s) => !s.only || s.only.test(clean));
+  // A source with no {q} in its URL is a fixed deals hub — it can't search for the product.
+  const isGenericPage = (s) => !/\{q[pd]?\}/.test(s.url);
+
   function render() {
     if (!clean) return;
     $("#summaryQ").textContent = clean;
     $("#summaryRaw").textContent = raw;
+    $("#stickyQText").textContent = clean;
     if (typeof LAST_VERIFIED !== "undefined") $("#verified").textContent = LAST_VERIFIED;
     summary.classList.remove("hidden");
     $("#tips").classList.remove("hidden");
     document.body.classList.add("searched");
 
-    results.innerHTML = SOURCES.map((cat, i) => `
+    results.innerHTML = SOURCES.map((cat, i) => {
+      const items = visibleItems(cat);
+      return `
       <section class="category">
         <div class="cat-head">
           <div><h2>${cat.category}</h2><p>${cat.blurb}</p></div>
-          <button class="ghost small open-cat" data-cat="${i}">Open all ${cat.items.length}</button>
+          <button class="ghost small open-cat" data-cat="${i}">Open all ${items.length}</button>
         </div>
         <div class="grid">
-          ${cat.items.map((s) => `
+          ${items.map((s) => `
             <a class="card ${s.top ? "top" : ""}" href="${buildUrl(s.url, clean)}" ${targetAttr()}>
               <span class="name">${s.name}</span>
               ${s.top ? '<span class="pill">Top pick</span>' : ""}
+              ${isGenericPage(s)
+                ? '<span class="q generic">General deals page — browse for your product</span>'
+                : `<span class="q" title="Searches this site for “${esc(clean)}”">🔍 ${esc(clean)}</span>`}
               ${dealHtml(s.name)}
               <span class="host">${hostOf(s.url)}</span>
             </a>`).join("")}
         </div>
-      </section>`).join("");
+      </section>`;
+    }).join("");
   }
 
   // ---- Live deals (data/live-deals.json, refreshed by GitHub Action) ----
@@ -198,19 +210,26 @@
     queryInput.value = b.dataset.q;
     search(b.dataset.q);
   });
-  $("#editQ").addEventListener("click", () => {
+  function editQuery() {
     queryInput.value = clean;
     queryInput.focus();
     queryInput.select();
     $("#hero").scrollIntoView({ behavior: "smooth" });
-  });
+  }
+  $("#editQ").addEventListener("click", editQuery);
+  $("#stickyEdit").addEventListener("click", editQuery);
+  // Keep "Searching for <product>" on screen once the summary box scrolls away.
+  const stickyQ = $("#stickyQ");
+  new IntersectionObserver(([entry]) => {
+    stickyQ.classList.toggle("hidden", entry.isIntersecting || !clean);
+  }).observe(summary);
   $("#openAll").addEventListener("click", () => {
-    openMany(SOURCES.flatMap((c) => c.items.filter((s) => s.top).map((s) => buildUrl(s.url, clean))));
+    openMany(SOURCES.flatMap((c) => visibleItems(c).filter((s) => s.top).map((s) => buildUrl(s.url, clean))));
   });
   results.addEventListener("click", (e) => {
     const b = e.target.closest(".open-cat");
     if (!b) return;
-    openMany(SOURCES[+b.dataset.cat].items.map((s) => buildUrl(s.url, clean)));
+    openMany(visibleItems(SOURCES[+b.dataset.cat]).map((s) => buildUrl(s.url, clean)));
   });
 
   const q = new URLSearchParams(location.search).get("q");

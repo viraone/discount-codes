@@ -1,9 +1,10 @@
 // Every source is a URL template. {q} = URL-encoded query, {qp} = plus-joined query, {qd} = dash-joined query.
 // "top" = included in the "Open all top coupon sites" button.
+// "only" = a regex; the source is shown only when the cleaned query matches it (brand/category-specific sites).
 const SOURCES = [
   {
     category: "🏷️ Coupon & Promo Code Sites",
-    blurb: "The big aggregators. Codes here are usually for the retailer (Best Buy, Amazon, etc.) rather than the TV itself.",
+    blurb: "The big aggregators. Codes here are usually for the retailer (Best Buy, Amazon, etc.) rather than the product itself.",
     items: [
       { name: "RetailMeNot", url: "https://www.retailmenot.com/s/{q}", top: true },
       { name: "Honey (PayPal)", url: "https://www.joinhoney.com/search?q={q}", top: true },
@@ -25,8 +26,8 @@ const SOURCES = [
     category: "🏪 Retailer Deal Pages (direct)",
     blurb: "Search the store itself — sale prices, clearance, open-box and bundle offers show up here first.",
     items: [
-      { name: "Sony Store (if Sony product)", url: "https://electronics.sony.com/tv-video/televisions/c/all-tvs?q={q}", top: true },
-      { name: "Sony Certified Refurbished", url: "https://electronics.sony.com/refurbished/c/refurbished" },
+      { name: "Sony Store", url: "https://electronics.sony.com/search?q={q}", top: true, only: /sony|bravia|playstation|ps5/i },
+      { name: "Sony Certified Refurbished", url: "https://electronics.sony.com/refurbished/c/refurbished", only: /sony|bravia/i },
       { name: "Best Buy", url: "https://www.bestbuy.com/site/searchpage.jsp?st={q}&sp=-currentprice%20skuidsaas", top: true },
       { name: "Best Buy Open-Box", url: "https://www.bestbuy.com/site/searchpage.jsp?st={q}&qp=condition_facet%3DCondition~Open-Box&sp=-currentprice%20skuidsaas" },
       { name: "Best Buy Outlet", url: "https://www.bestbuy.com/site/misc/deal-of-the-day/pcmcat248000050016.c?id=pcmcat248000050016" },
@@ -41,7 +42,7 @@ const SOURCES = [
       { name: "Abt Electronics", url: "https://www.abt.com/resources/pages/search.php?keywords={q}" },
       { name: "Crutchfield", url: "https://www.crutchfield.com/search.aspx?search={q}" },
       { name: "Newegg", url: "https://www.newegg.com/p/pl?d={q}&Order=1" },
-      { name: "eBay (Sony official outlet too)", url: "https://www.ebay.com/sch/i.html?_nkw={q}&LH_ItemCondition=1000%7C1500%7C2000%7C2500&_sop=15" },
+      { name: "eBay (brand outlets too)", url: "https://www.ebay.com/sch/i.html?_nkw={q}&LH_ItemCondition=1000%7C1500%7C2000%7C2500&_sop=15" },
       { name: "Woot (Amazon deals)", url: "https://www.woot.com/search?query={q}" }
     ]
   },
@@ -78,9 +79,9 @@ const SOURCES = [
     items: [
       { name: "Slickdeals", url: "https://slickdeals.net/newsearch.php?q={q}&searcharea=deals", top: true },
       { name: "Reddit r/deals", url: "https://www.reddit.com/r/deals/search/?q={q}&restrict_sr=1&sort=new" },
-      { name: "Reddit r/buildapcsales (TVs)", url: "https://www.reddit.com/r/buildapcsales/search/?q={q}&restrict_sr=1&sort=new" },
-      { name: "Reddit r/bravia", url: "https://www.reddit.com/r/bravia/search/?q=deal+{q}&restrict_sr=1&sort=new" },
-      { name: "Reddit r/4kTV", url: "https://www.reddit.com/r/4kTV/search/?q={q}&restrict_sr=1&sort=new" },
+      { name: "Reddit r/buildapcsales", url: "https://www.reddit.com/r/buildapcsales/search/?q={q}&restrict_sr=1&sort=new", only: /\b(tv|monitor|gpu|rtx|nvidia|ssd|cpu|ram|laptop|pc)\b/i },
+      { name: "Reddit r/bravia", url: "https://www.reddit.com/r/bravia/search/?q=deal+{q}&restrict_sr=1&sort=new", only: /sony|bravia/i },
+      { name: "Reddit r/4kTV", url: "https://www.reddit.com/r/4kTV/search/?q={q}&restrict_sr=1&sort=new", only: /\btv\b|oled|qled|bravia/i },
       { name: "DealNews", url: "https://www.dealnews.com/search.html?search={q}" },
       { name: "Ben's Bargains", url: "https://bensbargains.com/search/?q={q}" },
       { name: "TechBargains", url: "https://www.techbargains.com/search?q={q}" },
@@ -99,8 +100,9 @@ const SOURCES = [
       { name: "Google: \"coupon code\" past month", url: "https://www.google.com/search?q={q}+%22coupon+code%22&tbs=qdr:m" },
       { name: "Google: \"discount code\"", url: "https://www.google.com/search?q={q}+%22discount+code%22" },
       { name: "Google: open box / refurbished", url: "https://www.google.com/search?q={q}+open+box+OR+refurbished+deal" },
-      { name: "Google: student / military discount", url: "https://www.google.com/search?q=Sony+TV+student+OR+military+OR+education+discount" },
-      { name: "Google News: Sony TV deals", url: "https://news.google.com/search?q=Sony+TV+deal+OR+sale" },
+      { name: "Google: student / military discount", url: "https://www.google.com/search?q={q}+student+OR+military+OR+education+discount" },
+      { name: "Google News: deals", url: "https://news.google.com/search?q={q}+deal+OR+sale" },
+      { name: "Google: brand's official store", url: "https://www.google.com/search?q={q}+official+store+coupon+OR+promo" },
       { name: "DuckDuckGo: coupon", url: "https://duckduckgo.com/?q={q}+coupon+code" },
       { name: "Bing: promo code", url: "https://www.bing.com/search?q={q}+promo+code" },
       { name: "YouTube: deal reviews", url: "https://www.youtube.com/results?search_query={q}+deal" },
@@ -111,8 +113,8 @@ const SOURCES = [
     category: "🎁 Special Programs & Hidden Discounts",
     blurb: "Discounts most people never check.",
     items: [
-      { name: "Sony Education Store (students/teachers)", url: "https://electronics.sony.com/education-store" },
-      { name: "Sony Military & First Responder (via ID.me)", url: "https://www.id.me/shop/sony" },
+      { name: "Sony Education Store (students/teachers)", url: "https://electronics.sony.com/education-store", only: /sony|bravia|playstation|ps5/i },
+      { name: "Sony Military & First Responder (via ID.me)", url: "https://www.id.me/shop/sony", only: /sony|bravia|playstation|ps5/i },
       { name: "Best Buy Student Deals", url: "https://www.bestbuy.com/site/misc/student-deals/pcmcat276200050000.c?id=pcmcat276200050000" },
       { name: "Best Buy Price Match Guarantee", url: "https://www.bestbuy.com/site/help-topics/price-match-guarantee/pcmcat297300050000.c?id=pcmcat297300050000" },
       { name: "Amazon Price Match / Deals page", url: "https://www.amazon.com/deals" },
