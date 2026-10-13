@@ -1,10 +1,14 @@
 // Every source is a URL template. {q} = URL-encoded query, {qp} = plus-joined query, {qd} = dash-joined query.
 // "top" = included in the "Open all top coupon sites" button.
 // "only" = a regex; the source is shown only when the cleaned query matches it (brand/category-specific sites).
+// "q" (on a category or an item) = which query the site gets: "full" (default) = the whole product name,
+//   "core" = brand + category ("epson projector") for deal communities that only index posted deals,
+//   "brand" = just the brand ("epson") for coupon/cashback sites that index stores, not products.
 const SOURCES = [
   {
     category: "🏷️ Coupon & Promo Code Sites",
-    blurb: "The big aggregators. Codes here are usually for the retailer (Best Buy, Amazon, etc.) rather than the product itself.",
+    blurb: "Searched by brand — coupon sites list codes per store (Epson, Best Buy, Amazon), not per product.",
+    q: "brand",
     items: [
       { name: "RetailMeNot", url: "https://www.retailmenot.com/s/{q}", top: true },
       { name: "Honey (PayPal)", url: "https://www.joinhoney.com/search?q={q}", top: true },
@@ -48,7 +52,8 @@ const SOURCES = [
   },
   {
     category: "💸 Cashback Portals (stack on top of codes)",
-    blurb: "Activate before you buy. Cashback stacks with coupon codes and sale prices.",
+    blurb: "Searched by brand/store. Activate before you buy — cashback stacks with coupon codes and sale prices.",
+    q: "brand",
     items: [
       { name: "Rakuten", url: "https://www.rakuten.com/search?term={q}", top: true },
       { name: "TopCashback", url: "https://www.topcashback.com/search/merchants/?s={q}" },
@@ -75,9 +80,10 @@ const SOURCES = [
   },
   {
     category: "🔥 Deal Communities & Forums",
-    blurb: "Real people posting real codes, often before coupon sites catch them.",
+    blurb: "Searched by brand + category so posted deals actually show up; sorted lowest price first where the site allows.",
+    q: "core",
     items: [
-      { name: "Slickdeals", url: "https://slickdeals.net/newsearch.php?q={q}&searcharea=deals", top: true },
+      { name: "Slickdeals", url: "https://slickdeals.net/search?q={q}&sort=price_low", top: true },
       { name: "Reddit r/deals", url: "https://www.reddit.com/r/deals/search/?q={q}&restrict_sr=1&sort=new" },
       { name: "Reddit r/buildapcsales", url: "https://www.reddit.com/r/buildapcsales/search/?q={q}&restrict_sr=1&sort=new", only: /\b(tv|monitor|gpu|rtx|nvidia|ssd|cpu|ram|laptop|pc)\b/i },
       { name: "Reddit r/bravia", url: "https://www.reddit.com/r/bravia/search/?q=deal+{q}&restrict_sr=1&sort=new", only: /sony|bravia/i },

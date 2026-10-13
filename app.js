@@ -62,6 +62,23 @@
     return `<span class="deal deal-${d.type}"><b>${TYPE_LABEL[d.type] || ""}</b> ${d.offer}</span>`;
   }
 
+  // Sites index different things, so a catalog title that works at Best Buy finds nothing on
+  // Slickdeals or RetailMeNot. "brand" = first word when it's a word ("epson"); "core" = brand +
+  // the category noun, the last plain word that isn't a size or a modifier ("epson projector").
+  const MODIFIER = /^(pro|max|plus|mini|ultra|air|lite|se|gen|edition|series|class|inch|in|ft|mm|cm|black|white|silver|gray|grey|blue|red|green|gold|new|used|refurbished)$/;
+  function queryFor(mode, q) {
+    const w = q.split(" ");
+    const brand = /^[a-z][a-z'-]*$/.test(w[0]) ? w[0] : "";
+    if (mode === "brand") return brand || q;
+    if (mode === "core") {
+      const cat = w.slice(1).reverse().find((t) => /^[a-z][a-z-]*$/.test(t) && !MODIFIER.test(t)) || w[w.length - 1];
+      return brand && w.length > 3 ? `${brand} ${cat}` : q;
+    }
+    return q;
+  }
+  const siteQuery = (s, cat) => queryFor(s.q || cat.q || "full", clean);
+  const siteUrl = (s, cat) => buildUrl(s.url, siteQuery(s, cat));
+
   // Brand/category-specific sources (Sony Store, r/4kTV...) only show when the query is about them.
   const visibleItems = (cat) => cat.items.filter((s) => !s.only || s.only.test(clean));
   // A source with no {q} in its URL is a fixed deals hub — it can't search for the product.
@@ -87,12 +104,12 @@
         </div>
         <div class="grid">
           ${items.map((s) => `
-            <a class="card ${s.top ? "top" : ""}" href="${buildUrl(s.url, clean)}" ${targetAttr()}>
+            <a class="card ${s.top ? "top" : ""}" href="${siteUrl(s, cat)}" ${targetAttr()}>
               <span class="name">${s.name}</span>
               ${s.top ? '<span class="pill">Top pick</span>' : ""}
               ${isGenericPage(s)
                 ? '<span class="q generic">General deals page — browse for your product</span>'
-                : `<span class="q" title="Searches this site for “${esc(clean)}”">🔍 ${esc(clean)}</span>`}
+                : `<span class="q" title="Searches this site for “${esc(siteQuery(s, cat))}”">🔍 ${esc(siteQuery(s, cat))}</span>`}
               ${dealHtml(s.name)}
               <span class="host">${hostOf(s.url)}</span>
             </a>`).join("")}
@@ -175,14 +192,16 @@
     $("#liveCount").textContent = hits.length ? `${hits.length} ${close ? "close" : "found"}` : "";
     box.classList.remove("hidden");
     if (!hits.length) {
-      const e = encodeURIComponent(clean);
+      // Deal communities only index posted deals, so send them the brand + category ("epson projector")
+      // rather than the full title, which usually finds nothing. Google gets the full product.
+      const core = queryFor("core", clean), ce = encodeURIComponent(core), e = encodeURIComponent(clean);
       $("#liveList").innerHTML = `
-        <p class="muted">Nothing in the auto-tracked pool for “${esc(clean)}” yet — search the deal communities live instead:</p>
+        <p class="muted">Nothing in the auto-tracked pool for “${esc(clean)}” yet — search the deal communities live instead (searched as “${esc(core)}” so posted deals show up):</p>
         <div class="live-fallback">
-          <a class="fb" href="https://slickdeals.net/newsearch.php?q=${e}&searcharea=deals&searchin=first&sort=newest" ${targetAttr()}>🔥 Slickdeals: newest “${esc(clean)}” deals</a>
-          <a class="fb" href="https://www.reddit.com/r/deals/search/?q=${e}&restrict_sr=1&sort=new" ${targetAttr()}>👾 Reddit r/deals</a>
-          <a class="fb" href="https://www.dealnews.com/search.html?search=${e}" ${targetAttr()}>📰 DealNews</a>
-          <a class="fb" href="https://www.google.com/search?q=${e}+deal+OR+%22promo+code%22&tbs=qdr:w" ${targetAttr()}>🔎 Google: deals this week</a>
+          <a class="fb" href="https://slickdeals.net/search?q=${ce}&sort=price_low" ${targetAttr()}>🔥 Slickdeals: “${esc(core)}” deals, lowest price first</a>
+          <a class="fb" href="https://www.reddit.com/r/deals/search/?q=${ce}&restrict_sr=1&sort=new" ${targetAttr()}>👾 Reddit r/deals: “${esc(core)}”</a>
+          <a class="fb" href="https://www.dealnews.com/search.html?search=${ce}" ${targetAttr()}>📰 DealNews: “${esc(core)}”</a>
+          <a class="fb" href="https://www.google.com/search?q=${e}+deal+OR+%22promo+code%22&tbs=qdr:w" ${targetAttr()}>🔎 Google: “${esc(clean)}” deals this week</a>
         </div>
         <p class="muted small">Tracked products are refreshed every 6 h. To auto-track “${esc(clean)}”, add it to <code>scraper/keywords.json</code>.</p>`;
       return;
@@ -337,12 +356,13 @@
     stickyQ.classList.toggle("hidden", entry.isIntersecting || !clean);
   }).observe(summary);
   $("#openAll").addEventListener("click", () => {
-    openMany(SOURCES.flatMap((c) => visibleItems(c).filter((s) => s.top).map((s) => buildUrl(s.url, clean))));
+    openMany(SOURCES.flatMap((c) => visibleItems(c).filter((s) => s.top).map((s) => siteUrl(s, c))));
   });
   results.addEventListener("click", (e) => {
     const b = e.target.closest(".open-cat");
     if (!b) return;
-    openMany(visibleItems(SOURCES[+b.dataset.cat]).map((s) => buildUrl(s.url, clean)));
+    const c = SOURCES[+b.dataset.cat];
+    openMany(visibleItems(c).map((s) => siteUrl(s, c)));
   });
 
   const q = new URLSearchParams(location.search).get("q");
