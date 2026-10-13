@@ -11,7 +11,9 @@
   let clean = "";
 
   // Turn "i want a sony flat screen!!" into "sony flat screen tv".
-  const FILLER = /\b(i|i'd|id|i'm|im|we|we'd|want|wanna|would|like|love|need|to|buy|get|find|looking|look|for|a|an|the|some|new|cheap|cheapest|best|good|please|pls|discount|discounts|coupon|coupons|code|codes|promo|deal|deals|on|of|my|me|us|can|you|help|show)\b/gi;
+  // "to" is only filler after a verb ("want to buy") — it's part of the product in "male to male", "usb to hdmi".
+  const VERB_TO = /\b(want|wanna|need|like|love|looking|going|have|trying|got)\s+to\b/gi;
+  const FILLER = /\b(i|i'd|id|i'm|im|we|we'd|want|wanna|would|like|love|need|buy|get|find|looking|look|for|a|an|the|some|new|cheap|cheapest|best|good|please|pls|discount|discounts|coupon|coupons|code|codes|promo|deal|deals|on|of|my|me|us|can|you|help|show)\b/gi;
   const SYNONYMS = [
     [/\bflat ?screen\b/gi, "flat screen tv"],
     [/\btelevision\b/gi, "tv"],
@@ -23,9 +25,18 @@
     // Catalog titles pasted from a store listing ("Epson PowerLite E20 LCD Projector - 4:3 - Ceiling
     // Mountable") carry spec segments after " - ", " | " or ",". Keep the product segment when it's
     // specific enough on its own (3+ words).
-    const first = s.split(/\s+[-–|]\s+|,\s+/)[0].trim();
-    if (first.split(/\s+/).length >= 3) s = first;
-    let q = s.toLowerCase().replace(/[^a-z0-9\s'"-]/g, " ").replace(/(^|\s)-+(?=\s|$)/g, " ");
+    const segs = s.split(/\s+[-–|]\s+|,\s+/).map((t) => t.trim());
+    if (segs[0].split(/\s+/).length >= 3) {
+      // "3.5mm aux cable - 3.5mm aux cable male to male 6ft": a later segment that restates the
+      // first one is the fuller product name, so prefer it.
+      s = segs.slice(1).find((t) => t.toLowerCase().includes(segs[0].toLowerCase())) || segs[0];
+    }
+    let q = s.toLowerCase()
+      .replace(/(\d)\.(\d)/g, "$1\u0000$2")        // protect decimals: 3.5mm, 2.4ghz
+      .replace(/[^a-z0-9\s'"\-\u0000]/g, " ")
+      .replace(/\u0000/g, ".")
+      .replace(/(^|\s)-+(?=\s|$)/g, " ")
+      .replace(VERB_TO, " ");
     q = q.replace(FILLER, " ");
     for (const [re, to] of SYNONYMS) q = q.replace(re, to);
     q = q.replace(/\btv tv\b/g, "tv").replace(/\s+/g, " ").trim();
