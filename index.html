@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Discount Code Finder — Search Every Deal Site at Once</title>
 <meta name="description" content="Type any product. Get one-click searches across 70+ coupon sites, retailers, cashback portals, price trackers and deal communities.">
-<link rel="stylesheet" href="style.css?v=20261013c">
+<link rel="stylesheet" href="style.css?v=20261013d">
 </head>
 <body role="application">
 <header class="hero" id="hero" role="search">
@@ -50,6 +50,43 @@
     </div>
   </div>
 
+  <section id="prices" class="prices hidden">
+    <div class="cat-head">
+      <div>
+        <h2>💰 Prices right now</h2>
+        <p>Live listings from Best Buy and eBay, lowest price first. Compare here, then click one to buy.</p>
+      </div>
+      <div class="live-controls">
+        <span id="pricesCount" class="count"></span>
+        <label class="sortbox">Store
+          <select id="pStore">
+            <option value="all" selected>All stores</option>
+            <option value="Best Buy">Best Buy</option>
+            <option value="eBay">eBay</option>
+          </select>
+        </label>
+        <label class="sortbox">Condition
+          <select id="pCond">
+            <option value="all" selected>Any</option>
+            <option value="New">New</option>
+            <option value="Open box">Open box</option>
+            <option value="Refurbished">Refurbished</option>
+            <option value="Used">Used</option>
+          </select>
+        </label>
+        <label class="sortbox">Sort
+          <select id="pSort">
+            <option value="price-asc" selected>Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Best rated</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div id="pricesHead" class="p-head"></div>
+    <div id="pricesList" class="p-list"></div>
+  </section>
+
   <section id="live" class="live hidden">
     <div class="cat-head">
       <div>
@@ -93,8 +130,9 @@
   <p>Free static page · Hosted on GitHub Pages</p>
 </footer>
 
-<script src="sources.js?v=20261013c"></script>
-<script src="deals.js?v=20261013c"></script>
-<script src="app.js?v=20261013c"></script>
+<script src="config.js?v=20261013d"></script>
+<script src="sources.js?v=20261013d"></script>
+<script src="deals.js?v=20261013d"></script>
+<script src="app.js?v=20261013d"></script>
 </body>
 </html>

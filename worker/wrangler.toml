@@ -1,0 +1,6 @@
+name = "discount-prices"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Secrets (never put values here — use `npx wrangler secret put <NAME>`):
+#   BESTBUY_API_KEY, EBAY_CLIENT_ID, EBAY_CLIENT_SECRET

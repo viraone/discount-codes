@@ -245,3 +245,48 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
   background: rgba(11, 15, 25, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
 }
 .stickyq b { color: var(--text); text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70vw; }
+
+/* --- prices dashboard --- */
+.prices { margin: 28px 0 8px; padding: 20px 24px; background: linear-gradient(180deg, #121c1a, var(--card)); border: 1px solid #2a5a44; border-radius: var(--radius); }
+.prices .cat-head { align-items: flex-start; }
+.prices .cat-head > div:first-child { flex: 1 1 320px; min-width: 0; }
+.p-head { display: flex; gap: 18px; align-items: center; margin: 6px 0 16px; padding: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; }
+.p-head img { width: 96px; height: 96px; object-fit: contain; background: #fff; border-radius: 8px; flex: 0 0 auto; }
+.p-head .p-title { font-weight: 700; font-size: 18px; text-transform: capitalize; }
+.p-head .p-from { font-size: 28px; font-weight: 800; color: #3ddc84; margin: 2px 0; }
+.p-head .p-from small { font-size: 14px; font-weight: 600; color: var(--muted); margin-right: 6px; }
+.p-head .p-meta { color: var(--muted); font-size: 14px; }
+.p-list { display: grid; gap: 10px; }
+.p-list > p { margin: 0; }
+.p-card { display: grid; grid-template-columns: 72px 1fr auto; gap: 14px; align-items: center; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; color: var(--text); text-decoration: none; }
+.p-card:hover { border-color: #3ddc84; background: var(--card-hover); }
+.p-card.accessory { opacity: .7; }
+.p-card img { width: 72px; height: 72px; object-fit: contain; background: #fff; border-radius: 6px; }
+.p-card .noimg { width: 72px; height: 72px; border-radius: 6px; background: var(--card); display: grid; place-items: center; color: var(--muted); font-size: 22px; }
+.p-card .p-name { font-weight: 600; font-size: 15px; line-height: 1.3; }
+.p-card .p-sub { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; font-size: 13px; color: var(--muted); align-items: center; }
+.p-card .store { font-weight: 700; padding: 1px 8px; border-radius: 999px; font-size: 12px; }
+.p-card .store.bestbuy { background: #ffe000; color: #0046be; }
+.p-card .store.ebay { background: #e53238; color: #fff; }
+.p-card .cond { padding: 1px 8px; border-radius: 999px; border: 1px solid var(--border); }
+.p-card .cond.new { color: #3ddc84; border-color: #2a5a44; }
+.p-card .p-price { text-align: right; white-space: nowrap; }
+.p-card .p-price .now { font-size: 22px; font-weight: 800; color: #3ddc84; }
+.p-card .p-price .was { display: block; font-size: 13px; color: var(--muted); text-decoration: line-through; }
+.p-card .p-price .ship { display: block; font-size: 12px; color: var(--muted); }
+.p-card .p-price .buy { display: inline-block; margin-top: 6px; font-size: 13px; font-weight: 700; color: var(--accent); }
+.p-skel { height: 96px; border-radius: 10px; background: linear-gradient(90deg, var(--card), var(--card-hover), var(--card)); background-size: 200% 100%; animation: shimmer 1.2s infinite; }
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+.p-setup { background: var(--bg); border: 1px dashed var(--border); border-radius: 10px; padding: 14px 16px; color: var(--muted); font-size: 14px; }
+.p-setup code { background: var(--card); padding: 1px 6px; border-radius: 4px; }
+@media (max-width: 600px) {
+  .p-card { grid-template-columns: 56px 1fr; }
+  .p-card img, .p-card .noimg { width: 56px; height: 56px; }
+  .p-card .p-price { grid-column: 2; text-align: left; }
+  .p-head { flex-direction: column; align-items: flex-start; }
+}
+.p-head:empty { display: none; }
+@media (max-width: 700px) {
+  .prices .live-controls { flex: 1 1 100%; margin-left: 0; gap: 8px; }
+  .prices .sortbox select { max-width: 120px; }
+}

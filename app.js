@@ -126,7 +126,7 @@
   // Accessories (cases, chargers, docks...) sink to the bottom unless the search asks for one.
   // Text in parentheses is ignored (a watch lists "(Aluminum Case, Sport Band)" as its own parts),
   // and so are "charging case", "titanium case" and "wireless charging", which describe the product itself.
-  const ACCESSORY = /\b(cases?|covers?|skins?|straps?|bands?|chargers?|cables?|docks?|holders?|mounts?|protectors?|sleeves?|pouch|ear ?tips|adapters?)\b/i;
+  const ACCESSORY = /\b(cases?|covers?|skins?|straps?|bands?|chargers?|cables?|docks?|holders?|mounts?|brackets?|protectors?|sleeves?|pouch|ear ?tips|adapters?|lamps?|bulbs?|remotes?|stands?|bags?|filters?|batter(y|ies)|replacement)\b/i;
   const isAccessory = (title) => ACCESSORY.test(title.replace(/\([^)]*\)/g, " ").replace(/\b(charging|carrying|usb-c|aluminum|titanium|steel) case\b/gi, "").replace(/\bwireless charging\b/gi, ""));
   // Close matches, used only when no deal matches every word. The title must contain all but
   // one of the words the pool knows (never fewer than two), including the rarest of them — so
@@ -202,11 +202,108 @@
       </a>`).join("");
   }
 
+  // ---- Prices right now (Best Buy + eBay via the Cloudflare Worker in worker/) ----
+  const PRICES_API = (typeof CONFIG !== "undefined" && CONFIG.PRICES_API ? CONFIG.PRICES_API : "").replace(/\/$/, "");
+  let PRICES = null;        // last worker response
+  let pricesFor = "";       // query it was fetched for
+  const money = (n) => "$" + Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const storeClass = (s) => s.toLowerCase().replace(/[^a-z]/g, "");
+
+  async function loadPrices() {
+    const box = $("#prices");
+    box.classList.remove("hidden");
+    $("#pricesHead").innerHTML = "";
+    $("#pricesCount").textContent = "";
+    if (!PRICES_API) {
+      $("#pricesList").innerHTML = `<div class="p-setup">Live prices aren't switched on yet. Deploy the price worker and put its URL in <code>config.js</code> — steps in <code>worker/README.md</code>. Until then, the cards below search each store for you.</div>`;
+      return;
+    }
+    const q = clean;
+    pricesFor = q;
+    $("#pricesList").innerHTML = '<div class="p-skel"></div><div class="p-skel"></div><div class="p-skel"></div>';
+    try {
+      const r = await fetch(`${PRICES_API}/search?q=${encodeURIComponent(q)}`);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const j = await r.json();
+      if (pricesFor !== q) return;   // user already searched something else
+      PRICES = j;
+      renderPrices();
+    } catch (err) {
+      if (pricesFor !== q) return;
+      PRICES = null;
+      $("#pricesList").innerHTML = `<p class="muted">Couldn't reach the price service (${esc(err.message)}). The store cards below still work.</p>`;
+    }
+  }
+
+  function renderPrices() {
+    if (!PRICES || !clean) return;
+    const store = $("#pStore").value, cond = $("#pCond").value, mode = $("#pSort").value;
+    let list = PRICES.listings.filter((l) => (store === "all" || l.store === store) && (cond === "all" || l.condition === cond));
+    if (mode === "price-desc") list.sort((a, b) => b.price - a.price);
+    else if (mode === "rating") list.sort((a, b) => (b.rating ?? -1) - (a.rating ?? -1) || a.price - b.price);
+    else list.sort((a, b) => a.price - b.price);
+    // Same rule as live deals: cases, cables and mounts sink unless the search is for one.
+    if (!ACCESSORY.test(clean)) list = [...list.filter((l) => !isAccessory(l.title)), ...list.filter((l) => isAccessory(l.title))];
+
+    const all = PRICES.listings;
+    const srcNote = Object.entries(PRICES.sources || {}).filter(([, s]) => !s.ok).map(([k, s]) => `${k === "bestbuy" ? "Best Buy" : "eBay"} unavailable (${s.error})`).join(" · ");
+    if (!all.length) {
+      $("#pricesHead").innerHTML = "";
+      $("#pricesCount").textContent = "";
+      $("#pricesList").innerHTML = `<p class="muted">No listings found for “${esc(clean)}” at Best Buy or eBay right now.${srcNote ? ` ${esc(srcNote)}.` : ""} Try fewer words (<button class="link" id="pFewer">search “${esc(clean.split(" ").slice(0, 3).join(" "))}”</button>) or use the store cards below.</p>`;
+      const b = $("#pFewer");
+      if (b) b.addEventListener("click", () => search(clean.split(" ").slice(0, 3).join(" ")));
+      return;
+    }
+
+    // Product header: prices come from the main (non-accessory) listings, so a $25 mount bracket
+    // never becomes the "from" price of a projector. If the search *is* for an accessory, use everything.
+    const wantsAcc = ACCESSORY.test(clean);
+    const main = (wantsAcc ? all : all.filter((l) => !isAccessory(l.title))).slice().sort((a, b) => a.price - b.price);
+    const pool = main.length ? main : all;
+    const hero = pool.find((l) => l.image) || pool[0];
+    const lo = pool[0].price, hi = pool[pool.length - 1].price;
+    const byStore = ["Best Buy", "eBay"].map((s) => [s, all.filter((l) => l.store === s).length]).filter(([, n]) => n);
+    const newLo = pool.filter((l) => l.condition === "New").map((l) => l.price);
+    const accCount = all.length - pool.length;
+    $("#pricesHead").innerHTML = `
+      ${hero.image ? `<img src="${safeUrl(hero.image)}" alt="">` : ""}
+      <div>
+        <div class="p-title">${esc(clean)}</div>
+        <div class="p-from"><small>from</small>${money(lo)}${newLo.length && Math.min(...newLo) !== lo ? ` <small>· new from ${money(Math.min(...newLo))}</small>` : ""}</div>
+        <div class="p-meta">${pool.length} listings${accCount ? ` (+${accCount} accessories, shown last)` : ""} · ${byStore.map(([s, n]) => `${s} ${n}`).join(" · ")} · range ${money(lo)}–${money(hi)} · updated ${PRICES.updated ? ago(PRICES.updated) : "just now"}${srcNote ? ` · ${esc(srcNote)}` : ""}</div>
+      </div>`;
+    $("#pricesCount").textContent = list.length === all.length ? `${all.length} listings` : `${list.length} of ${all.length}`;
+
+    if (!list.length) { $("#pricesList").innerHTML = `<p class="muted">Nothing matches those filters.</p>`; return; }
+    $("#pricesList").innerHTML = list.slice(0, 60).map((l) => `
+      <a class="p-card ${isAccessory(l.title) && !ACCESSORY.test(clean) ? "accessory" : ""}" href="${safeUrl(l.url)}" ${targetAttr()}>
+        ${l.image ? `<img src="${safeUrl(l.image)}" alt="" loading="lazy">` : '<div class="noimg">🛒</div>'}
+        <div>
+          <div class="p-name">${esc(l.title)}</div>
+          <div class="p-sub">
+            <span class="store ${storeClass(l.store)}">${esc(l.store)}</span>
+            <span class="cond ${l.condition === "New" ? "new" : ""}">${esc(l.condition)}</span>
+            ${l.rating != null ? `<span>★ ${Number(l.rating).toFixed(1)}${l.reviews ? ` (${Number(l.reviews).toLocaleString()})` : ""}</span>` : ""}
+            ${l.seller ? `<span>Seller: ${esc(l.seller)}</span>` : ""}
+          </div>
+        </div>
+        <div class="p-price">
+          <span class="now">${money(l.price)}</span>
+          ${l.wasPrice ? `<span class="was">${money(l.wasPrice)}</span>` : ""}
+          <span class="ship">${l.shipping === 0 ? "Free shipping" : l.shipping > 0 ? `+ ${money(l.shipping)} shipping` : "Shipping at checkout"}</span>
+          <span class="buy">View at ${esc(l.store)} →</span>
+        </div>
+      </a>`).join("");
+  }
+  ["#pStore", "#pCond", "#pSort"].forEach((id) => $(id).addEventListener("change", renderPrices));
+
   function search(text, push = true) {
     raw = text.trim();
     if (!raw) { queryInput.focus(); return; }
     clean = cleanQuery(raw);
     render();
+    loadPrices();
     renderLive();
     if (push) history.replaceState(null, "", "?q=" + encodeURIComponent(raw));
     summary.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -218,7 +315,7 @@
   }
 
   $("#searchForm").addEventListener("submit", (e) => { e.preventDefault(); search(queryInput.value); });
-  newTab.addEventListener("change", () => { render(); renderLive(); });
+  newTab.addEventListener("change", () => { render(); renderPrices(); renderLive(); });
   $("#sort").addEventListener("change", renderLive);
   $("#presets").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-q]");
