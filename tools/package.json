@@ -1,0 +1,13 @@
+{
+  "name": "discount-codes-tools",
+  "private": true,
+  "type": "module",
+  "description": "Helper scripts: fetch the Best Buy / eBay API keys for the price worker.",
+  "scripts": {
+    "bestbuy": "node get-key.mjs bestbuy",
+    "ebay": "node get-key.mjs ebay"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}

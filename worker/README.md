@@ -3,6 +3,10 @@
 A Cloudflare Worker (free tier) that gives the page live listings so visitors never leave the site.
 `GET /search?q=epson powerlite e20` returns Best Buy + eBay listings sorted lowest to highest.
 
+## Fastest way: the two buttons in `tools/`
+
+Double-click **`tools/Get Best Buy Key.command`** → Chrome opens on Best Buy's sign-in. Sign in (or create a BestBuy.com account), click "Get API Key" if the portal asks, and the script copies the key to your clipboard and saves it to `worker/secrets.json`, then closes. **`tools/Get eBay Keys.command`** does the same for the eBay Production App ID + Cert ID. Then skip to step 3.
+
 ## One-time setup (about 10 minutes, all free)
 
 ### 1. Best Buy API key
