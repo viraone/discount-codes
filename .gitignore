@@ -1,2 +1,5 @@
 .vercel
 .env*
+.dev.vars
+worker/secrets.json
+node_modules
