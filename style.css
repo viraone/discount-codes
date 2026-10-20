@@ -290,3 +290,9 @@ body:not(.searched) .hero { min-height: 70vh; display: flex; align-items: center
   .prices .live-controls { flex: 1 1 100%; margin-left: 0; gap: 8px; }
   .prices .sortbox select { max-width: 120px; }
 }
+
+/* Honesty labels: what was checked vs. what is just a link */
+.store-note { margin: 28px 0 0; padding: 14px 18px; border: 1px dashed var(--border); border-radius: 10px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.store-note b { color: var(--text); }
+.live-top .live-un { color: var(--muted); border: 1px dashed var(--border); padding: 1px 8px; border-radius: 999px; font-size: 12px; }
+.p-sub .instock { color: #3ddc84; font-weight: 700; }

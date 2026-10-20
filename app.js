@@ -84,7 +84,7 @@
   const siteUrl = (s, cat) => buildUrl(s.url, siteQuery(s, cat));
 
   // Brand/category-specific sources (Sony Store, r/4kTV...) only show when the query is about them.
-  const visibleItems = (cat) => cat.items.filter((s) => !s.only || s.only.test(clean));
+  const visibleItems = (cat) => cat.items.filter((s) => (!s.only || s.only.test(clean)) && (!s.not || !s.not.test(clean)));
   // A source with no {q} in its URL is a fixed deals hub — it can't search for the product.
   const isGenericPage = (s) => !/\{q[pd]?\}/.test(s.url);
 
@@ -98,7 +98,9 @@
     $("#tips").classList.remove("hidden");
     document.body.classList.add("searched");
 
-    results.innerHTML = SOURCES.map((cat, i) => {
+    // The cards below are plain search links into each site; we can't see their stock.
+    const storeNote = `<div class="store-note"><b>🔍 Search these stores yourself.</b> Every card below opens that site's own search page. We can't see their inventory, so a result can be empty or sold out. Listings marked <b>✓ in stock</b> or <b>✓ still live</b> above were checked; everything below was not.</div>`;
+    results.innerHTML = storeNote + SOURCES.map((cat, i) => {
       const items = visibleItems(cat);
       return `
       <section class="category">
@@ -219,7 +221,7 @@
           ${d.code ? `<span class="code">CODE: ${esc(d.code)}</span>` : ""}
           ${d.store ? `<span class="store">${esc(d.store)}</span>` : ""}
           <span class="src">${esc(d.source)}${d.score != null ? ` · 👍 ${Number(d.score)}` : ""}${d.date ? ` · ${ago(d.date)}` : ""}</span>
-          ${d.expired === false && d.checked ? `<span class="live-ok">✓ still live ${ago(d.checked)}</span>` : ""}
+          ${d.expired === false && d.checked ? `<span class="live-ok">✓ still live ${ago(d.checked)}</span>` : `<span class="live-un" title="This source can't be checked automatically. It may have expired or sold out.">not verified</span>`}
         </div>
         <div class="live-title">${highlightNew(d.title)}</div>
       </a>`).join("");
@@ -305,6 +307,7 @@
         <div>
           <div class="p-name">${esc(l.title)}</div>
           <div class="p-sub">
+            <span class="instock" title="Listed as available when fetched ${PRICES.updated ? ago(PRICES.updated) : "just now"}">✓ in stock</span>
             <span class="store ${storeClass(l.store)}">${esc(l.store)}</span>
             <span class="cond ${l.condition === "New" ? "new" : ""}">${esc(l.condition)}</span>
             ${l.rating != null ? `<span>★ ${Number(l.rating).toFixed(1)}${l.reviews ? ` (${Number(l.reviews).toLocaleString()})` : ""}</span>` : ""}

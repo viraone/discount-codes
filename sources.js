@@ -4,6 +4,8 @@
 // "q" (on a category or an item) = which query the site gets: "full" (default) = the whole product name,
 //   "core" = brand + category ("epson projector") for deal communities that only index posted deals,
 //   "brand" = just the brand ("epson") for coupon/cashback sites that index stores, not products.
+// Clothing / workwear / footwear queries. Electronics-only stores carry "not: APPAREL" so they don't show for them.
+const APPAREL = /\b(carhartt|dickies|levi'?s?|wrangler|pants?|jeans?|dungarees?|shorts|jackets?|coats?|hoodies?|sweatshirts?|shirts?|tees?|boots?|shoes?|sneakers?|socks|gloves|beanies?|overalls|bibs?|workwear|apparel|clothing|north face|patagonia|nike|adidas|hoka|new balance)\b/i;
 const SOURCES = [
   {
     category: "🏷️ Coupon & Promo Code Sites",
@@ -28,24 +30,30 @@ const SOURCES = [
   },
   {
     category: "🏪 Retailer Deal Pages (direct)",
-    blurb: "Search the store itself — sale prices, clearance, open-box and bundle offers show up here first.",
+    blurb: "Each card opens that store's own search. We can't see their stock, so a result may be empty or sold out — check the verified prices above first.",
     items: [
       { name: "Sony Store", url: "https://electronics.sony.com/search?q={q}", top: true, only: /sony|bravia|playstation|ps5/i },
       { name: "Sony Certified Refurbished", url: "https://electronics.sony.com/refurbished/c/refurbished", only: /sony|bravia/i },
-      { name: "Best Buy", url: "https://www.bestbuy.com/site/searchpage.jsp?st={q}&sp=-currentprice%20skuidsaas", top: true },
-      { name: "Best Buy Open-Box", url: "https://www.bestbuy.com/site/searchpage.jsp?st={q}&qp=condition_facet%3DCondition~Open-Box&sp=-currentprice%20skuidsaas" },
-      { name: "Best Buy Outlet", url: "https://www.bestbuy.com/site/misc/deal-of-the-day/pcmcat248000050016.c?id=pcmcat248000050016" },
+      { name: "Best Buy", url: "https://www.bestbuy.com/site/searchpage.jsp?st={q}&sp=-currentprice%20skuidsaas", top: true, not: APPAREL },
+      { name: "Best Buy Open-Box", url: "https://www.bestbuy.com/site/searchpage.jsp?st={q}&qp=condition_facet%3DCondition~Open-Box&sp=-currentprice%20skuidsaas", not: APPAREL },
+      { name: "Best Buy Outlet", url: "https://www.bestbuy.com/site/misc/deal-of-the-day/pcmcat248000050016.c?id=pcmcat248000050016", not: APPAREL },
       { name: "Amazon", url: "https://www.amazon.com/s?k={q}&s=price-asc-rank", top: true },
       { name: "Amazon Warehouse (used/open-box)", url: "https://www.amazon.com/s?k={q}&rh=p_n_condition-type%3A6461716011&s=price-asc-rank" },
       { name: "Walmart", url: "https://www.walmart.com/search?q={q}&sort=price_low" },
       { name: "Target", url: "https://www.target.com/s?searchTerm={q}&sortBy=PriceLow" },
       { name: "Costco", url: "https://www.costco.com/CatalogSearch?keyword={q}" },
       { name: "Sam's Club", url: "https://www.samsclub.com/s/{q}" },
-      { name: "B&H Photo", url: "https://www.bhphotovideo.com/c/search?q={q}&sort=PRICE_LOW_TO_HIGH" },
-      { name: "Adorama", url: "https://www.adorama.com/l/?searchinfo={q}" },
-      { name: "Abt Electronics", url: "https://www.abt.com/resources/pages/search.php?keywords={q}" },
-      { name: "Crutchfield", url: "https://www.crutchfield.com/search.aspx?search={q}" },
-      { name: "Newegg", url: "https://www.newegg.com/p/pl?d={q}&Order=1" },
+      { name: "B&H Photo", url: "https://www.bhphotovideo.com/c/search?q={q}&sort=PRICE_LOW_TO_HIGH", not: APPAREL },
+      { name: "Adorama", url: "https://www.adorama.com/l/?searchinfo={q}", not: APPAREL },
+      { name: "Abt Electronics", url: "https://www.abt.com/resources/pages/search.php?keywords={q}", not: APPAREL },
+      { name: "Crutchfield", url: "https://www.crutchfield.com/search.aspx?search={q}", not: APPAREL },
+      { name: "Newegg", url: "https://www.newegg.com/p/pl?d={q}&Order=1", not: APPAREL },
+      { name: "Carhartt", url: "https://www.carhartt.com/search?q={q}", top: true, only: /carhartt/i },
+      { name: "Dick's Sporting Goods", url: "https://www.dickssportinggoods.com/search/SearchDisplay?searchTerm={q}", only: APPAREL },
+      { name: "Tractor Supply", url: "https://www.tractorsupply.com/tsc/search/{q}", only: APPAREL },
+      { name: "Boot Barn", url: "https://www.bootbarn.com/search?q={q}", only: APPAREL },
+      { name: "Zappos", url: "https://www.zappos.com/search?term={q}", only: APPAREL },
+      { name: "Kohl's", url: "https://www.kohls.com/search.jsp?search={q}", only: APPAREL },
       { name: "eBay (brand outlets too)", url: "https://www.ebay.com/sch/i.html?_nkw={q}&LH_ItemCondition=1000%7C1500%7C2000%7C2500&_sop=15" },
       { name: "Woot (Amazon deals)", url: "https://www.woot.com/search?query={q}" }
     ]
@@ -121,8 +129,8 @@ const SOURCES = [
     items: [
       { name: "Sony Education Store (students/teachers)", url: "https://electronics.sony.com/education-store", only: /sony|bravia|playstation|ps5/i },
       { name: "Sony Military & First Responder (via ID.me)", url: "https://www.id.me/shop/sony", only: /sony|bravia|playstation|ps5/i },
-      { name: "Best Buy Student Deals", url: "https://www.bestbuy.com/site/misc/student-deals/pcmcat276200050000.c?id=pcmcat276200050000" },
-      { name: "Best Buy Price Match Guarantee", url: "https://www.bestbuy.com/site/help-topics/price-match-guarantee/pcmcat297300050000.c?id=pcmcat297300050000" },
+      { name: "Best Buy Student Deals", url: "https://www.bestbuy.com/site/misc/student-deals/pcmcat276200050000.c?id=pcmcat276200050000", not: APPAREL },
+      { name: "Best Buy Price Match Guarantee", url: "https://www.bestbuy.com/site/help-topics/price-match-guarantee/pcmcat297300050000.c?id=pcmcat297300050000", not: APPAREL },
       { name: "Amazon Price Match / Deals page", url: "https://www.amazon.com/deals" },
       { name: "Costco Warehouse Savings", url: "https://www.costco.com/warehouse-savings.html" },
       { name: "Target Circle Offers", url: "https://www.target.com/circle" },
