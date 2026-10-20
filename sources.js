@@ -1,5 +1,6 @@
 // Every source is a URL template. {q} = URL-encoded query, {qp} = plus-joined query, {qd} = dash-joined query.
 // "top" = included in the "Open all top coupon sites" button.
+// "host" = label shown on the card when the link goes through a search page (e.g. a Google site: search) instead of the site itself.
 // "only" = a regex; the source is shown only when the cleaned query matches it (brand/category-specific sites).
 // "q" (on a category or an item) = which query the site gets: "full" (default) = the whole product name,
 //   "core" = brand + category ("epson projector") for deal communities that only index posted deals,
@@ -9,23 +10,23 @@ const APPAREL = /\b(carhartt|dickies|levi'?s?|wrangler|pants?|jeans?|dungarees?|
 const SOURCES = [
   {
     category: "🏷️ Coupon & Promo Code Sites",
-    blurb: "Searched by brand — coupon sites list codes per store (Epson, Best Buy, Amazon), not per product.",
+    blurb: "Searched by brand — coupon sites list codes per store (Epson, Best Buy, Amazon), not per product. Most cards open a Google search limited to that site, so you always land on a real page, never a dead link.",
     q: "brand",
     items: [
-      { name: "RetailMeNot", url: "https://www.retailmenot.com/s/{q}", top: true },
+      { name: "RetailMeNot", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Aretailmenot.com", host: "retailmenot.com (via Google)", top: true },
       { name: "Honey (PayPal)", url: "https://www.joinhoney.com/search?q={q}", top: true },
-      { name: "Coupons.com", url: "https://www.coupons.com/search/?q={q}" },
-      { name: "Slickdeals Coupons", url: "https://slickdeals.net/coupons/search/?q={q}", top: true },
-      { name: "CouponFollow", url: "https://couponfollow.com/search?q={q}" },
-      { name: "Groupon Coupons", url: "https://www.groupon.com/coupons/search?query={q}" },
-      { name: "Dealspotr", url: "https://dealspotr.com/search?q={q}" },
-      { name: "Knoji", url: "https://knoji.com/search/?q={q}" },
-      { name: "Wethrift", url: "https://www.wethrift.com/search?q={q}" },
-      { name: "SimplyCodes", url: "https://simplycodes.com/search?q={q}" },
-      { name: "CouponBirds", url: "https://www.couponbirds.com/search?q={q}" },
-      { name: "Offers.com", url: "https://www.offers.com/search/?q={q}" },
-      { name: "Promocodes.com", url: "https://www.promocodes.com/search?q={q}" },
-      { name: "DontPayFull", url: "https://www.dontpayfull.com/search?q={q}" }
+      { name: "Coupons.com", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Acoupons.com", host: "coupons.com (via Google)" },
+      { name: "Slickdeals Coupons", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Aslickdeals.net%2Fpromo-codes", host: "slickdeals.net (via Google)", top: true },
+      { name: "CouponFollow", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Acouponfollow.com", host: "couponfollow.com (via Google)" },
+      { name: "Groupon Coupons", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Agroupon.com%2Fcoupons", host: "groupon.com (via Google)" },
+      { name: "Dealspotr", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Adealspotr.com", host: "dealspotr.com (via Google)" },
+      { name: "Knoji", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Aknoji.com", host: "knoji.com (via Google)" },
+      { name: "Wethrift", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Awethrift.com", host: "wethrift.com (via Google)" },
+      { name: "SimplyCodes", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Asimplycodes.com", host: "simplycodes.com (via Google)" },
+      { name: "CouponBirds", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Acouponbirds.com", host: "couponbirds.com (via Google)" },
+      { name: "Offers.com", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Aoffers.com", host: "offers.com (via Google)" },
+      { name: "Promocodes.com", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Apromocodes.com", host: "promocodes.com (via Google)" },
+      { name: "DontPayFull", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Adontpayfull.com", host: "dontpayfull.com (via Google)" }
     ]
   },
   {
@@ -55,7 +56,7 @@ const SOURCES = [
       { name: "Zappos", url: "https://www.zappos.com/search?term={q}", only: APPAREL },
       { name: "Kohl's", url: "https://www.kohls.com/search.jsp?search={q}", only: APPAREL },
       { name: "eBay (brand outlets too)", url: "https://www.ebay.com/sch/i.html?_nkw={q}&LH_ItemCondition=1000%7C1500%7C2000%7C2500&_sop=15" },
-      { name: "Woot (Amazon deals)", url: "https://www.woot.com/search?query={q}" }
+      { name: "Woot (Amazon deals)", url: "https://www.google.com/search?q={q}+site%3Awoot.com", host: "woot.com (via Google)" }
     ]
   },
   {
@@ -67,7 +68,7 @@ const SOURCES = [
       { name: "TopCashback", url: "https://www.topcashback.com/search/merchants/?s={q}" },
       { name: "Honey Gold", url: "https://www.joinhoney.com/search?q={q}" },
       { name: "Capital One Shopping", url: "https://capitaloneshopping.com/s/{qd}" },
-      { name: "BeFrugal", url: "https://www.befrugal.com/search/?q={q}" },
+      { name: "BeFrugal", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Abefrugal.com", host: "befrugal.com (via Google)" },
       { name: "Ibotta", url: "https://ibotta.com/search?q={q}" },
       { name: "PayPal Honey Rewards", url: "https://www.paypal.com/shopping/search?q={q}" }
     ]
@@ -79,11 +80,8 @@ const SOURCES = [
       { name: "Google Shopping", url: "https://www.google.com/search?tbm=shop&q={q}&tbs=p_ord:p", top: true },
       { name: "CamelCamelCamel (Amazon history)", url: "https://camelcamelcamel.com/search?sq={q}" },
       { name: "Keepa", url: "https://keepa.com/#!search/1-{q}" },
-      { name: "PriceGrabber", url: "https://www.pricegrabber.com/search/?q={q}" },
-      { name: "Shopzilla", url: "https://www.shopzilla.com/search?q={q}" },
       { name: "PriceSpy", url: "https://pricespy.co.uk/search?search={q}" },
       { name: "Bing Shopping", url: "https://www.bing.com/shop?q={q}" },
-      { name: "Klarna Price Compare", url: "https://www.klarna.com/us/shopping/search/?q={q}" }
     ]
   },
   {
@@ -100,7 +98,6 @@ const SOURCES = [
       { name: "Ben's Bargains", url: "https://bensbargains.com/search/?q={q}" },
       { name: "TechBargains", url: "https://www.techbargains.com/search?q={q}" },
       { name: "Brad's Deals", url: "https://www.bradsdeals.com/search?q={q}" },
-      { name: "Kinja Deals", url: "https://kinjadeals.theinventory.com/search?q={q}" },
       { name: "HotUKDeals (UK)", url: "https://www.hotukdeals.com/search?q={q}" },
       { name: "RedFlagDeals (Canada)", url: "https://www.redflagdeals.com/search/#!/q={q}" },
       { name: "OzBargain (Australia)", url: "https://www.ozbargain.com.au/search/node/{q}" }

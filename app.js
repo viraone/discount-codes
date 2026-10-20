@@ -117,7 +117,7 @@
                 ? '<span class="q generic">General deals page — browse for your product</span>'
                 : `<span class="q" title="Searches this site for “${esc(siteQuery(s, cat))}”">🔍 ${esc(siteQuery(s, cat))}</span>`}
               ${dealHtml(s.name)}
-              <span class="host">${hostOf(s.url)}</span>
+              <span class="host">${s.host || hostOf(s.url)}</span>
             </a>`).join("")}
         </div>
       </section>`;
