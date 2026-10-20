@@ -43,5 +43,5 @@ curl "https://discount-prices.<your-subdomain>.workers.dev/search?q=airpods%20pr
 
 ## Notes
 - Results are cached per query for 15 minutes, so the free quotas (Best Buy ~50k/day, eBay 5k/day) go a long way.
-- Only `*.github.io` and `localhost` origins are allowed to call it from a browser.
+- Only `checkoutcheat.com`, `*.vercel.app`, `*.github.io` and `localhost` origins are allowed to call it from a browser.
 - To run it locally: `npx wrangler dev` (uses the same secrets after `wrangler secret put`, or a `.dev.vars` file).

@@ -7,14 +7,14 @@
 
 const CACHE_TTL = 15 * 60;
 const MAX_QUERY = 120;
-const ALLOWED_ORIGIN = /^(https:\/\/[a-z0-9-]+\.github\.io|http:\/\/(localhost|127\.0\.0\.1)(:\d+)?)$/i;
+const ALLOWED_ORIGIN = /^(https:\/\/[a-z0-9-]+\.github\.io|https:\/\/(www\.)?checkoutcheat\.com|https:\/\/[a-z0-9-]+\.vercel\.app|http:\/\/(localhost|127\.0\.0\.1)(:\d+)?)$/i;
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const origin = request.headers.get("Origin") || "";
     const cors = {
-      "Access-Control-Allow-Origin": ALLOWED_ORIGIN.test(origin) ? origin : "https://viraone.github.io",
+      "Access-Control-Allow-Origin": ALLOWED_ORIGIN.test(origin) ? origin : "https://checkoutcheat.com",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
       "Vary": "Origin",
