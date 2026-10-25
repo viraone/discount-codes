@@ -2,13 +2,16 @@
 // Run: node scraper/check-links.js [query]      (default query: carhartt)
 // 404/410/ENOTFOUND = genuinely broken. 403 = the site blocks scripts, so it says nothing either way.
 const fs = require("fs");
-const src = fs.readFileSync(require("path").join(__dirname, "..", "sources.js"), "utf8") + "\nmodule.exports={SOURCES};";
+const src = fs.readFileSync(require("path").join(__dirname, "..", "sources.js"), "utf8") + "\nmodule.exports={SOURCES,STORES,COUPON_SITES};";
 const m = { exports: {} };
 new Function("module", src)(m);
 const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 const q = process.argv[2] || "carhartt";
 const build = (t) => t.replace(/\{q\}/g, encodeURIComponent(q)).replace(/\{qp\}/g, q.split(" ").join("+")).replace(/\{qd\}/g, q.replace(/[^a-z0-9]+/g, "-"));
-const items = m.exports.SOURCES.flatMap((c) => c.items.map((s) => ({ cat: c.category.slice(3, 20), name: s.name, url: build(s.url) })));
+const { SOURCES, STORES, COUPON_SITES } = m.exports;
+const items = SOURCES.flatMap((c) => c.items.map((s) => ({ cat: c.category.slice(3, 20), name: s.name, url: build(s.url) })));
+// Coupon sites link to store pages, not searches: check every store on every site. 403 = site blocks scripts (inconclusive).
+for (const st of STORES) for (const site of COUPON_SITES) items.push({ cat: "Coupon stores", name: `${site.name} / ${st.name}`, url: site.url.replace("{d}", st.domain) });
 (async () => {
   const out = [];
   let i = 0;

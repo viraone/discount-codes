@@ -7,27 +7,62 @@
 //   "brand" = just the brand ("epson") for coupon/cashback sites that index stores, not products.
 // Clothing / workwear / footwear queries. Electronics-only stores carry "not: APPAREL" so they don't show for them.
 const APPAREL = /\b(carhartt|dickies|levi'?s?|wrangler|pants?|jeans?|dungarees?|shorts|jackets?|coats?|hoodies?|sweatshirts?|shirts?|tees?|boots?|shoes?|sneakers?|socks|gloves|beanies?|overalls|bibs?|workwear|apparel|clothing|north face|patagonia|nike|adidas|hoka|new balance)\b/i;
+// Fitness / sporting-goods queries, so Dick's and Wayfair show for "dumbbell set" but not for a TV.
+const FITNESS = /\b(dumbbells?|barbells?|kettlebells?|weights?|weight ?plates?|bench|squat rack|treadmill|elliptical|exercise|workout|fitness|yoga|bowflex|peloton)\b/i;
+// Gadget queries, so B&H and Newegg show for a laptop but not for a dumbbell.
+const TECH = /\b(tv|monitor|laptop|pc|gpu|rtx|ssd|cpu|ram|smartphone|tablet|camera|projector|headphones?|earbuds|speaker|soundbar|keyboard|mouse|router|printer|console|watch|drone|vacuum)\b/i;
+
+// Coupon sites list codes per STORE, never per product, and their own search pages are dead (404/410),
+// so the "Coupon Codes by Store" section links to each site's page for a store. {d} = the store's domain.
+// These three were opened in a real browser for Best Buy and for a niche store (Rogue Fitness) and loaded for both.
+// Groupon, CouponFollow, Coupons.com, Promocodes and Honey were tried and dropped: they 404 or block for some stores.
+const COUPON_SITES = [
+  { name: "RetailMeNot", url: "https://www.retailmenot.com/view/{d}", top: true },
+  { name: "DontPayFull", url: "https://www.dontpayfull.com/at/{d}" },
+  { name: "SimplyCodes", url: "https://simplycodes.com/store/{d}" }
+];
+// "match" = tested against the query (first word mapped to its parent brand, e.g. macbook -> apple): the
+// query is about that store, so show only it. Stores with "general" or a matching "when" are shown when the
+// query is a product ("dumbbell set") rather than a store. "not" hides a store for queries it doesn't carry.
+const STORES = [
+  { name: "Amazon",        domain: "amazon.com",            match: /^amazon\b/, general: true },
+  { name: "Walmart",       domain: "walmart.com",           match: /^walmart\b/, general: true },
+  { name: "Target",        domain: "target.com",            match: /^target\b/, general: true },
+  { name: "Best Buy",      domain: "bestbuy.com",           match: /^best ?buy\b/, general: true, not: APPAREL },
+  { name: "Costco",        domain: "costco.com",            match: /^costco\b/, general: true },
+  { name: "eBay",          domain: "ebay.com",              match: /^ebay\b/, general: true },
+  { name: "Sam's Club",    domain: "samsclub.com",          match: /^sam'?s\b/ },
+  { name: "Wayfair",       domain: "wayfair.com",           match: /^wayfair\b/, when: FITNESS },
+  { name: "Dick's Sporting Goods", domain: "dickssportinggoods.com", match: /^dick'?s\b/, when: new RegExp(FITNESS.source + "|" + APPAREL.source, "i") },
+  { name: "Kohl's",        domain: "kohls.com",             match: /^kohl'?s\b/, when: APPAREL },
+  { name: "Zappos",        domain: "zappos.com",            match: /^zappos\b/, when: APPAREL },
+  { name: "Tractor Supply", domain: "tractorsupply.com",    match: /^tractor supply\b/, when: APPAREL },
+  { name: "Boot Barn",     domain: "bootbarn.com",          match: /^boot ?barn\b/, when: APPAREL },
+  { name: "Newegg",        domain: "newegg.com",            match: /^newegg\b/, when: TECH },
+  { name: "B&H Photo",     domain: "bhphotovideo.com",      match: /^(b&h|bh)\b/, when: TECH },
+  { name: "Home Depot",    domain: "homedepot.com",         match: /^home ?depot\b/ },
+  { name: "Lowe's",        domain: "lowes.com",             match: /^lowe'?s\b/ },
+  { name: "Apple",         domain: "apple.com",             match: /^apple\b/ },
+  { name: "Samsung",       domain: "samsung.com",           match: /^samsung\b/ },
+  { name: "Sony",          domain: "sony.com",              match: /^sony\b/ },
+  { name: "Dell",          domain: "dell.com",              match: /^dell\b/ },
+  { name: "HP",            domain: "hp.com",                match: /^hp\b/ },
+  { name: "Lenovo",        domain: "lenovo.com",            match: /^lenovo\b/ },
+  { name: "Epson",         domain: "epson.com",             match: /^epson\b/ },
+  { name: "Bose",          domain: "bose.com",              match: /^bose\b/ },
+  { name: "Nike",          domain: "nike.com",              match: /^nike\b/ },
+  { name: "Adidas",        domain: "adidas.com",            match: /^adidas\b/ },
+  { name: "Carhartt",      domain: "carhartt.com",          match: /^carhartt\b/ },
+  { name: "Bowflex",       domain: "bowflex.com",           match: /^bowflex\b/ },
+  { name: "Rogue Fitness", domain: "roguefitness.com",      match: /^rogue\b/ }
+];
+
 const SOURCES = [
   {
-    category: "🏷️ Coupon & Promo Code Sites",
-    blurb: "Searched by brand — coupon sites list codes per store (Epson, Best Buy, Amazon), not per product. Most cards open a Google search limited to that site, so you always land on a real page, never a dead link.",
-    q: "brand",
-    items: [
-      { name: "RetailMeNot", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Aretailmenot.com", host: "retailmenot.com (via Google)", top: true },
-      { name: "Honey (PayPal)", url: "https://www.joinhoney.com/search?q={q}", top: true },
-      { name: "Coupons.com", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Acoupons.com", host: "coupons.com (via Google)" },
-      { name: "Slickdeals Coupons", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Aslickdeals.net%2Fpromo-codes", host: "slickdeals.net (via Google)", top: true },
-      { name: "CouponFollow", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Acouponfollow.com", host: "couponfollow.com (via Google)" },
-      { name: "Groupon Coupons", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Agroupon.com%2Fcoupons", host: "groupon.com (via Google)" },
-      { name: "Dealspotr", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Adealspotr.com", host: "dealspotr.com (via Google)" },
-      { name: "Knoji", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Aknoji.com", host: "knoji.com (via Google)" },
-      { name: "Wethrift", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Awethrift.com", host: "wethrift.com (via Google)" },
-      { name: "SimplyCodes", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Asimplycodes.com", host: "simplycodes.com (via Google)" },
-      { name: "CouponBirds", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Acouponbirds.com", host: "couponbirds.com (via Google)" },
-      { name: "Offers.com", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Aoffers.com", host: "offers.com (via Google)" },
-      { name: "Promocodes.com", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Apromocodes.com", host: "promocodes.com (via Google)" },
-      { name: "DontPayFull", url: "https://www.google.com/search?q={q}+coupon+codes+site%3Adontpayfull.com", host: "dontpayfull.com (via Google)" }
-    ]
+    // Rendered by app.js from STORES + COUPON_SITES (one card per store, one link per coupon site); no items of its own.
+    category: "🏷️ Coupon Codes by Store",
+    kind: "coupon-stores",
+    items: []
   },
   {
     category: "🏪 Retailer Deal Pages (direct)",

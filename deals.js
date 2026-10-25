@@ -2,22 +2,6 @@
 // update the value + LAST_VERIFIED when you re-check. Keys must match `name` in sources.js.
 const LAST_VERIFIED = "2026-09-07";
 const DEALS = {
-  // Coupon sites
-  "RetailMeNot": { offer: "Store codes: typically $10–$100 off electronics", type: "code" },
-  "Honey (PayPal)": { offer: "Auto-applies best code at checkout + Honey Gold rewards", type: "tool" },
-  "Slickdeals Coupons": { offer: "Community-verified codes, often 10–20% off at Best Buy/Target", type: "code" },
-  "Coupons.com": { offer: "Retailer promo codes, varies by store", type: "code" },
-  "CouponFollow": { offer: "Codes with success-rate %, varies", type: "code" },
-  "Groupon Coupons": { offer: "Exclusive Best Buy / Walmart codes, varies", type: "code" },
-  "Dealspotr": { offer: "Verified codes, avg 10–15% off", type: "code" },
-  "Knoji": { offer: "Codes + \"does this brand offer X discount\" answers", type: "code" },
-  "Wethrift": { offer: "Codes tested this week, typically 5–20%", type: "code" },
-  "SimplyCodes": { offer: "Verified codes, shows last-worked time", type: "code" },
-  "CouponBirds": { offer: "Codes w/ success rate, varies", type: "code" },
-  "Offers.com": { offer: "Store codes + free shipping, varies", type: "code" },
-  "Promocodes.com": { offer: "Verified store codes, varies", type: "code" },
-  "DontPayFull": { offer: "Codes + price-drop alerts, varies", type: "code" },
-
   // Retailers
   "Sony Store": { offer: "Frequent $100–$500 off select BRAVIA; free shipping", type: "sale" },
   "Sony Certified Refurbished": { offer: "Up to 30% off list w/ 90-day warranty", type: "refurb" },

@@ -31,6 +31,8 @@ Edit `deals.js`. Each key matches a source `name`; set `offer` text and `type` (
 
 Edit `sources.js`. Each entry is `{ name, url, top }` where `{q}` in the URL is replaced with the encoded search query. Set `top: true` to include it in the "Open all top coupon sites" button.
 
+Coupon codes work differently: coupon sites list codes per **store**, and their own search pages are dead. The "Coupon Codes by Store" section is built from `STORES` (a store's name, domain, and a `match` regex) and `COUPON_SITES` (URL templates with `{d}` = store domain) in `sources.js`. To add a store, add one `STORES` line. Run `node scraper/check-links.js` to check every store page (a 403 only means the site blocks scripts).
+
 ## Prices right now (on-page price comparison)
 
 The **💰 Prices right now** dashboard shows live Best Buy + eBay listings for the search, lowest price first, with image, condition, shipping, rating/seller and a buy link — so visitors compare without leaving the site. It's powered by a free Cloudflare Worker in `worker/`; setup (two free API keys, ~10 min) is in [`worker/README.md`](worker/README.md). Until `config.js` has the worker URL, the section shows a setup note instead.

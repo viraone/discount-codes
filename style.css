@@ -153,6 +153,12 @@ h1 { font-size: clamp(34px, 6vw, 56px); margin: 18px 0 8px; letter-spacing: -0.0
 .card.top { border-color: rgba(255, 204, 51, .5); }
 .card .name { font-weight: 700; font-size: 16px; }
 .card .host { color: var(--muted); font-size: 13px; }
+.store-card { cursor: default; }
+.store-card:hover { transform: none; border-color: var(--border); background: var(--card); }
+.site-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.site-link { padding: 5px 11px; border: 1px solid var(--border); border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--accent-2); text-decoration: none; }
+.site-link:hover { border-color: var(--accent-2); background: var(--card-hover); }
+.site-link.top { border-color: rgba(255, 204, 51, .5); }
 .card .pill {
   position: absolute;
   top: 10px;

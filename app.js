@@ -88,6 +88,49 @@
   // A source with no {q} in its URL is a fixed deals hub — it can't search for the product.
   const isGenericPage = (s) => !/\{q[pd]?\}/.test(s.url);
 
+  // Coupon sites list codes per store, not per product, and their own search pages are dead. So the coupon
+  // section shows stores: the one the query names ("epson projector" -> Epson), or, for a product that isn't
+  // a store ("dumbbell set"), the stores that sell it. Each links to that store's page on each coupon site.
+  const couponUrl = (site, store) => site.url.replace("{d}", store.domain);
+  function couponStores() {
+    const w = clean.split(" ");
+    const key = [BRAND_OF[w[0]] || w[0], ...w.slice(1)].join(" ");
+    const exact = STORES.filter((st) => st.match.test(key));
+    if (exact.length) return { stores: exact, exact: true };
+    return { stores: STORES.filter((st) => (st.general || (st.when && st.when.test(clean))) && !(st.not && st.not.test(clean))), exact: false };
+  }
+  // The tabs a category's "Open all" button opens. Coupon stores: every site for the one store you named,
+  // otherwise just RetailMeNot for each store (one tab per store, not one per site per store).
+  function categoryUrls(cat) {
+    if (cat.kind !== "coupon-stores") return visibleItems(cat).map((s) => siteUrl(s, cat));
+    const { stores, exact } = couponStores();
+    return exact ? stores.flatMap((st) => COUPON_SITES.map((site) => couponUrl(site, st))) : stores.map((st) => couponUrl(COUPON_SITES[0], st));
+  }
+  function couponHtml(cat, i) {
+    const { stores, exact } = couponStores();
+    const blurb = exact
+      ? `Coupon sites list codes per store. These are the ${esc(stores[0].name)} pages on each one.`
+      : `Coupon sites list codes per store, not per product, and “${esc(clean)}” isn't a store. Pick a store that sells it and open its codes page.`;
+    const openLabel = exact ? `Open all ${categoryUrls(cat).length}` : `Open RetailMeNot for all ${stores.length}`;
+    return `
+      <section class="category">
+        <div class="cat-head">
+          <div><h2>${cat.category}</h2><p>${blurb}</p></div>
+          <button class="ghost small open-cat" data-cat="${i}">${openLabel}</button>
+        </div>
+        <div class="grid">
+          ${stores.map((st) => `
+            <div class="card store-card">
+              <span class="name">${esc(st.name)}</span>
+              <span class="host">${esc(st.domain)}</span>
+              <span class="site-links">
+                ${COUPON_SITES.map((site) => `<a class="site-link ${site.top ? "top" : ""}" href="${couponUrl(site, st)}" ${targetAttr()}>${site.name}</a>`).join("")}
+              </span>
+            </div>`).join("")}
+        </div>
+      </section>`;
+  }
+
   function render() {
     if (!clean) return;
     $("#summaryQ").textContent = clean;
@@ -99,8 +142,9 @@
     document.body.classList.add("searched");
 
     // The cards below are plain search links into each site; we can't see their stock.
-    const storeNote = `<div class="store-note"><b>🔍 Search these stores yourself.</b> Every card below opens that site's own search page. We can't see their inventory, so a result can be empty or sold out. Listings marked <b>✓ in stock</b> or <b>✓ still live</b> above were checked; everything below was not.</div>`;
+    const storeNote = `<div class="store-note"><b>🔍 Search these stores yourself.</b> Cards below open that site's own search page, or for coupon codes that store's codes page. We can't see their inventory, so a result can be empty or sold out. Listings marked <b>✓ in stock</b> or <b>✓ still live</b> above were checked; everything below was not.</div>`;
     results.innerHTML = storeNote + SOURCES.map((cat, i) => {
+      if (cat.kind === "coupon-stores") return couponHtml(cat, i);
       const items = visibleItems(cat);
       return `
       <section class="category">
@@ -363,13 +407,16 @@
     stickyQ.classList.toggle("hidden", entry.isIntersecting || !clean);
   }).observe(summary);
   $("#openAll").addEventListener("click", () => {
-    openMany(SOURCES.flatMap((c) => visibleItems(c).filter((s) => s.top).map((s) => siteUrl(s, c))));
+    openMany(SOURCES.flatMap((c) => {
+      if (c.kind !== "coupon-stores") return visibleItems(c).filter((s) => s.top).map((s) => siteUrl(s, c));
+      const { stores } = couponStores();
+      return stores.slice(0, 3).map((st) => couponUrl(COUPON_SITES[0], st));
+    }));
   });
   results.addEventListener("click", (e) => {
     const b = e.target.closest(".open-cat");
     if (!b) return;
-    const c = SOURCES[+b.dataset.cat];
-    openMany(visibleItems(c).map((s) => siteUrl(s, c)));
+    openMany(categoryUrls(SOURCES[+b.dataset.cat]));
   });
 
   const q = new URLSearchParams(location.search).get("q");
