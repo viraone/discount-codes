@@ -92,6 +92,7 @@
   // section shows stores: the one the query names ("epson projector" -> Epson), or, for a product that isn't
   // a store ("dumbbell set"), the stores that sell it. Each links to that store's page on each coupon site.
   const couponUrl = (site, store) => site.url.replace("{d}", store.domain);
+  const shopUrl = (store) => (store.search ? store.search.replace("{q}", encodeURIComponent(clean)) : "");
   function couponStores() {
     const w = clean.split(" ");
     const key = [BRAND_OF[w[0]] || w[0], ...w.slice(1)].join(" ");
@@ -99,19 +100,23 @@
     if (exact.length) return { stores: exact, exact: true };
     return { stores: STORES.filter((st) => (st.general || (st.when && st.when.test(clean))) && !(st.not && st.not.test(clean))), exact: false };
   }
-  // The tabs a category's "Open all" button opens. Coupon stores: every site for the one store you named,
-  // otherwise just RetailMeNot for each store (one tab per store, not one per site per store).
+  // The tabs a category's "Open all" button opens. Coupon stores: the store you named plus all its code pages,
+  // otherwise the product search at each store (the codes come after you've picked one).
   function categoryUrls(cat) {
     if (cat.kind !== "coupon-stores") return visibleItems(cat).map((s) => siteUrl(s, cat));
     const { stores, exact } = couponStores();
-    return exact ? stores.flatMap((st) => COUPON_SITES.map((site) => couponUrl(site, st))) : stores.map((st) => couponUrl(COUPON_SITES[0], st));
+    return exact
+      ? stores.flatMap((st) => [shopUrl(st), ...COUPON_SITES.map((site) => couponUrl(site, st))].filter(Boolean))
+      : stores.map(shopUrl).filter(Boolean);
   }
   function couponHtml(cat, i) {
     const { stores, exact } = couponStores();
+    // Coupon pages list a whole store's discounts, not products, so each card first takes you to the product
+    // at that store, then offers that store's codes for checkout.
     const blurb = exact
-      ? `Coupon sites list codes per store. These are the ${esc(stores[0].name)} pages on each one.`
-      : `Coupon sites list codes per store, not per product, and “${esc(clean)}” isn't a store. Pick a store that sells it and open its codes page.`;
-    const openLabel = exact ? `Open all ${categoryUrls(cat).length}` : `Open RetailMeNot for all ${stores.length}`;
+      ? `Shop it at ${esc(stores[0].name)}, then grab a code from the same card before you pay.`
+      : `Two steps: open a store to see “${esc(clean)}” there, then grab a code from the same card before you pay. Codes are per store, never per product.`;
+    const openLabel = exact ? `Open all ${categoryUrls(cat).length}` : `Search all ${categoryUrls(cat).length} stores`;
     return `
       <section class="category">
         <div class="cat-head">
@@ -123,6 +128,8 @@
             <div class="card store-card">
               <span class="name">${esc(st.name)}</span>
               <span class="host">${esc(st.domain)}</span>
+              ${st.search ? `<a class="shop-link" href="${shopUrl(st)}" ${targetAttr()} title="Search ${esc(st.name)} for “${esc(clean)}”">1. Shop “${esc(clean)}” →</a>` : ""}
+              <span class="site-label">${st.search ? "2. Then grab a code for checkout:" : "Coupon codes:"}</span>
               <span class="site-links">
                 ${COUPON_SITES.map((site) => `<a class="site-link ${site.top ? "top" : ""}" href="${couponUrl(site, st)}" ${targetAttr()}>${site.name}</a>`).join("")}
               </span>
@@ -409,8 +416,8 @@
   $("#openAll").addEventListener("click", () => {
     openMany(SOURCES.flatMap((c) => {
       if (c.kind !== "coupon-stores") return visibleItems(c).filter((s) => s.top).map((s) => siteUrl(s, c));
-      const { stores } = couponStores();
-      return stores.slice(0, 3).map((st) => couponUrl(COUPON_SITES[0], st));
+      const { stores, exact } = couponStores();
+      return exact ? stores.map((st) => couponUrl(COUPON_SITES[0], st)) : [];
     }));
   });
   results.addEventListener("click", (e) => {
