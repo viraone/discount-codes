@@ -2,6 +2,7 @@
 // "top" = included in the "Open all top coupon sites" button.
 // "host" = label shown on the card when the link goes through a search page (e.g. a Google site: search) instead of the site itself.
 // "only" = a regex; the source is shown only when the cleaned query matches it (brand/category-specific sites).
+// Retailer links open sorted by price only where that still shows the product first: Amazon and Target sort cheap accessories and unrelated items to the top, so they use relevance.
 // "q" (on a category or an item) = which query the site gets: "full" (default) = the whole product name,
 //   "core" = brand + category ("epson projector") for deal communities that only index posted deals,
 //   "brand" = just the brand ("epson") for coupon/cashback sites that index stores, not products.
@@ -74,16 +75,15 @@ const SOURCES = [
       { name: "Best Buy", url: "https://www.bestbuy.com/site/searchpage.jsp?st={q}&sp=-currentprice%20skuidsaas", top: true, not: APPAREL },
       { name: "Best Buy Open-Box", url: "https://www.bestbuy.com/site/searchpage.jsp?st={q}&qp=condition_facet%3DCondition~Open-Box&sp=-currentprice%20skuidsaas", not: APPAREL },
       { name: "Best Buy Outlet", url: "https://www.bestbuy.com/site/misc/deal-of-the-day/pcmcat248000050016.c?id=pcmcat248000050016", not: APPAREL },
-      { name: "Amazon", url: "https://www.amazon.com/s?k={q}&s=price-asc-rank", top: true },
-      { name: "Amazon Warehouse (used/open-box)", url: "https://www.amazon.com/s?k={q}&rh=p_n_condition-type%3A6461716011&s=price-asc-rank" },
+      { name: "Amazon", url: "https://www.amazon.com/s?k={q}", top: true },
+      { name: "Amazon Warehouse (used/open-box)", url: "https://www.amazon.com/s?k={q}&rh=p_n_condition-type%3A6461716011" },
       { name: "Walmart", url: "https://www.walmart.com/search?q={q}&sort=price_low" },
-      { name: "Target", url: "https://www.target.com/s?searchTerm={q}&sortBy=PriceLow" },
+      { name: "Target", url: "https://www.target.com/s?searchTerm={q}" },
       { name: "Costco", url: "https://www.costco.com/CatalogSearch?keyword={q}" },
       { name: "Sam's Club", url: "https://www.samsclub.com/s/{q}" },
       { name: "B&H Photo", url: "https://www.bhphotovideo.com/c/search?q={q}&sort=PRICE_LOW_TO_HIGH", not: APPAREL },
       { name: "Adorama", url: "https://www.adorama.com/l/?searchinfo={q}", not: APPAREL },
       { name: "Abt Electronics", url: "https://www.abt.com/resources/pages/search.php?keywords={q}", not: APPAREL },
-      { name: "Crutchfield", url: "https://www.crutchfield.com/search.aspx?search={q}", not: APPAREL },
       { name: "Newegg", url: "https://www.newegg.com/p/pl?d={q}&Order=1", not: APPAREL },
       { name: "Carhartt", url: "https://www.carhartt.com/search?q={q}", top: true, only: /carhartt/i },
       { name: "Dick's Sporting Goods", url: "https://www.dickssportinggoods.com/search/SearchDisplay?searchTerm={q}", only: APPAREL },
